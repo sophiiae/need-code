@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import { ProblemModel } from './store/interfaces'
+import { MenuBar, TableWrapper } from './components/index'
+
+import './App.css'
 
 function App() {
+  const [data, setData] = useState<ProblemModel[]>([])
+
+  const handleClick = () => {
+    // const map: any = {}
+    // problems.forEach(prob => {
+    //   const key = parseKeyToString(prob.id)
+    //   map[key] = prob
+    // })
+
+    // console.log(Object.keys(map).length)
+    console.log('home')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <MenuBar />
+      <TableWrapper problems={data} />
+      <button style={{ width: '80px' }} onClick={handleClick}>TEST</button>
     </div>
   );
 }
