@@ -1,3 +1,4 @@
+export * from './content-wrapper'
 export * from './loading-circle'
 
 // table

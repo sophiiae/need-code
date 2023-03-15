@@ -59,7 +59,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - problems.length) : 0
 
   return (
-    <Paper sx={{ width: '100%', mb: 2 }}>
+    <Paper sx={{ width: '70%', mb: 2, margin: 'auto' }}>
       <TableContainer>
         <Table
           sx={{ minWidth: 920 }}
@@ -114,7 +114,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
                       id={labelId}
                       scope='row'
                       align='left'
-                      style={{ width: '300px', border: 'none' }}
+                      style={{ width: '280px', border: 'none' }}
                     >
                       <Link
                         href={row.url}
@@ -129,7 +129,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
 
                     <TableCell
                       align='left'
-                      style={{ width: '70px', border: 'none' }}
+                      style={{ width: '60px', border: 'none' }}
                     >
                       {getDifficultyText(row.difficulty)}
                     </TableCell>
@@ -137,7 +137,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
                     <TableCell
                       padding='none'
                       align='center'
-                      style={{ width: '40px', border: 'none' }}
+                      style={{ width: '20px', border: 'none' }}
                     >
                       <span
                         style={{
@@ -156,7 +156,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
 
                     <TableCell
                       align='left'
-                      style={{ width: '90px', border: 'none' }}
+                      style={{ width: '120px', border: 'none' }}
                     >
                       {row.lastSubmit > initDate
                         ? row.lastSubmit.toLocaleDateString('en-US', {

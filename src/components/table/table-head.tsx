@@ -58,7 +58,7 @@ export const ProbTableHead = (props: TableHeadProps) => {
   return (
     <TableHead>
       <TableRow>
-        <TableCell>Status</TableCell>
+        <TableCell sx={{ paddingLeft: '30px' }}>Status</TableCell>
         {headCells.map(headCell => (
           <TableCell
             key={headCell.id}

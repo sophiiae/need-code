@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { ProblemModel } from './store/interfaces'
 import { MenuBar, TableWrapper } from './components/index'
 import { useAppSelector } from './redux'
+import { Routes, Route, Outlet, Link } from "react-router-dom"
 
 import './App.css'
 
+import { problems } from './assets/problems'
+
 function App() {
-  const [data, setData] = useState<ProblemModel[]>([])
+  const [data, setData] = useState<ProblemModel[]>(problems)
   const { linkTo } = useAppSelector(state => state.content)
 
   const handleClick = () => {
@@ -23,8 +26,13 @@ function App() {
   return (
     <div className='App'>
       <MenuBar />
-      <TableWrapper problems={data} />
+      <Routes>
+        <Route path='/' element={<>home</>} />
+        <Route path='/problems' element={<TableWrapper problems={data} />} />
+
+      </Routes>
       <button style={{ width: '80px' }} onClick={handleClick}>TEST</button>
+      {linkTo}
     </div>
   );
 }

@@ -15,9 +15,10 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { ProfileButton } from '../index'
 import { redirect, useAppDispatch } from '../../redux'
+import { Link } from "react-router-dom"
 
 const drawerWidth = 240
-const navItems = ['Home', 'Problem', 'Review']
+const navItems = ['home', 'problems', 'review']
 
 export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -72,9 +73,11 @@ export const MenuBar = () => {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
-                {item}
-              </Button>
+              <Link to={`/${item}`} style={{ textDecoration: 'none' }}>
+                <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
+                  {item}
+                </Button>
+              </Link>
             ))}
           </Box>
           <ProfileButton />

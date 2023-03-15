@@ -8,6 +8,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { redirect, useAppDispatch } from '../../redux'
+import { Link } from "react-router-dom"
 
 const settings = ['Profile', 'Account', 'Login', 'Logout']
 
@@ -57,7 +58,14 @@ export const ProfileButton = () => {
       >
         {settings.map((setting) => (
           <MenuItem key={setting} onClick={() => handleClick(setting)}>
-            <Typography textAlign="center">{setting}</Typography>
+            <Link
+              to={`/${setting}`}
+              style={{ color: 'inherit', textDecoration: 'none' }}>
+              <Typography textAlign="center">
+                {setting}
+              </Typography>
+            </Link>
+
           </MenuItem>
         ))}
       </Menu>
