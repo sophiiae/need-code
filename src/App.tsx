@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { ProblemModel } from './store/interfaces'
 import { MenuBar, TableWrapper } from './components/index'
+import { useAppSelector } from './redux'
 
 import './App.css'
 
 function App() {
   const [data, setData] = useState<ProblemModel[]>([])
+  const { linkTo } = useAppSelector(state => state.content)
 
   const handleClick = () => {
     // const map: any = {}
@@ -15,7 +17,7 @@ function App() {
     // })
 
     // console.log(Object.keys(map).length)
-    console.log('home')
+    console.log(linkTo)
   }
 
   return (

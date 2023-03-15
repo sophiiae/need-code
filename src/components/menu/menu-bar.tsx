@@ -14,19 +14,21 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { ProfileButton } from '../index'
+import { redirect, useAppDispatch } from '../../redux'
 
 const drawerWidth = 240
 const navItems = ['Home', 'Problem', 'Review']
 
-export const MenuBar = ({ setContent }: any) => {
+export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const dispatch = useAppDispatch()
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
   }
 
   const handleClick = (item: string) => {
-    setContent(item)
+    dispatch(redirect(item))
   }
 
   const drawer = (
