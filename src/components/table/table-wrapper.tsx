@@ -8,13 +8,11 @@ export interface TableWrapperProps {
 }
 
 export const TableWrapper = ({ problems }: TableWrapperProps) => {
-
   return (
-    <Box component="main" sx={{ p: 3 }}>
-      <Toolbar />
+    <>
       {problems.length
         ? <ProblemTable problems={problems} />
         : <LoadingCircle />}
-    </Box>
+    </>
   )
 }

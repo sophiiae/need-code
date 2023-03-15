@@ -58,14 +58,13 @@ export const ProfileButton = () => {
       >
         {settings.map((setting) => (
           <MenuItem key={setting} onClick={() => handleClick(setting)}>
-            <Link
-              to={`/${setting}`}
-              style={{ color: 'inherit', textDecoration: 'none' }}>
-              <Typography textAlign="center">
+            <Typography textAlign="center">
+              <Link
+                to={`/${setting}`}
+                style={{ color: 'inherit', textDecoration: 'none' }}>
                 {setting}
-              </Typography>
-            </Link>
-
+              </Link>
+            </Typography>
           </MenuItem>
         ))}
       </Menu>

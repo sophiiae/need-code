@@ -69,15 +69,19 @@ export const MenuBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            NeedCode
+            <Link to='/' style={{ color: 'inherit', textDecoration: 'none' }}>
+              NeedCode
+            </Link>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Link to={`/${item}`} style={{ textDecoration: 'none' }}>
-                <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
+              <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
+                <Link
+                  to={`/${item}`}
+                  style={{ color: 'inherit', textDecoration: 'none' }}>
                   {item}
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             ))}
           </Box>
           <ProfileButton />

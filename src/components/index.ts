@@ -1,4 +1,3 @@
-export * from './content-wrapper'
 export * from './loading-circle'
 
 // table
@@ -10,3 +9,4 @@ export * from './table/table-head'
 export * from './menu/profile-button'
 export * from './menu/menu-bar'
 
+export * from './login-form'

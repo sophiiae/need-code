@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
 import { ProblemModel } from './store/interfaces'
-import { MenuBar, TableWrapper } from './components/index'
+import { MenuBar, TableWrapper, LoginForm } from './components/index'
 import { useAppSelector } from './redux'
-import { Routes, Route, Outlet, Link } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'
 
@@ -26,13 +28,15 @@ function App() {
   return (
     <div className='App'>
       <MenuBar />
-      <Routes>
-        <Route path='/' element={<>home</>} />
-        <Route path='/problems' element={<TableWrapper problems={data} />} />
-
-      </Routes>
-      <button style={{ width: '80px' }} onClick={handleClick}>TEST</button>
-      {linkTo}
+      <Box component="main" sx={{ p: 3, margin: 'auto' }}>
+        <Toolbar />
+        <Routes>
+          <Route path='/' element={<div>top line</div>} />
+          <Route path='/home' element={<Navigate to='/' replace />} />
+          <Route path='/problems' element={<TableWrapper problems={data} />} />
+          <Route path='/login' element={<LoginForm />} />
+        </Routes>
+      </Box>
     </div>
   );
 }
