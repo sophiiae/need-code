@@ -7,16 +7,23 @@ import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import { redirect, useAppDispatch } from '../../redux'
 
 const settings = ['Profile', 'Account', 'Login', 'Logout']
 
 export const ProfileButton = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+  const dispatch = useAppDispatch()
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
   }
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
+
+  const handleClick = (item: string) => {
+    dispatch(redirect(item))
     setAnchorElUser(null)
   }
 
@@ -49,7 +56,7 @@ export const ProfileButton = () => {
         onClose={handleCloseUserMenu}
       >
         {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+          <MenuItem key={setting} onClick={() => handleClick(setting)}>
             <Typography textAlign="center">{setting}</Typography>
           </MenuItem>
         ))}
