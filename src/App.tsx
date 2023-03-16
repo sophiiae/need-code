@@ -12,18 +12,6 @@ import { problems } from './assets/problems'
 
 function App() {
   const [data, setData] = useState<ProblemModel[]>(problems)
-  const { linkTo } = useAppSelector(state => state.content)
-
-  const handleClick = () => {
-    // const map: any = {}
-    // problems.forEach(prob => {
-    //   const key = parseKeyToString(prob.id)
-    //   map[key] = prob
-    // })
-
-    // console.log(Object.keys(map).length)
-    console.log(linkTo)
-  }
 
   return (
     <div className='App'>

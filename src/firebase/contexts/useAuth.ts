@@ -26,12 +26,13 @@ export const signUp = (email: string, password: string) => {
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user
+    console.log('user: ', user)
     // ...
   })
   .catch((error) => {
     const errorCode = error.code
     const errorMessage = error.message
-    // ..
+    console.log(`${errorCode}: ${errorMessage}`)
   })
 }
 
@@ -46,5 +47,6 @@ export const login = (email: string, password: string) => {
   .catch((error) => {
     const errorCode = error.code
     const errorMessage = error.message
+    console.log(`${errorCode}: ${errorMessage}`)
   })
 }
