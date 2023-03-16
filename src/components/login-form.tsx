@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import { login } from '../firebase/contexts/useAuth'
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ export const LoginForm = () => {
   }
 
   const handleLogin = () => {
+    login(email, password)
     console.log(email, password)
   }
 

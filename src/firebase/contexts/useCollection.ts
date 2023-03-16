@@ -1,8 +1,8 @@
 import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
-import { db } from './config'
-import { parseKeyToString } from './helper'
-import { problems } from '../assets/problems'
-import { ProblemModel } from '../store/interfaces'
+import { db } from '../config'
+import { parseKeyToString } from '../helper'
+import { problems } from '../../assets/problems'
+import { ProblemModel } from '../../store/interfaces'
 
 // Get a list of problems from your database
 export const getProblems = async () => {

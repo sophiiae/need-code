@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { ProfileButton } from '../index'
+import { ProfileMenu } from '../index'
 import { redirect, useAppDispatch } from '../../redux'
 import { Link } from "react-router-dom"
 
@@ -84,7 +84,7 @@ export const MenuBar = () => {
               </Button>
             ))}
           </Box>
-          <ProfileButton />
+          <ProfileMenu />
         </Toolbar>
       </AppBar>
       <Box component="nav">
