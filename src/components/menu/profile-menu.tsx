@@ -4,6 +4,9 @@ import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import Avatar from '@mui/material/Avatar'
 import AccountCircle from '@mui/icons-material/AccountCircle'
+import Button from '@mui/material/Button'
+import { Link } from "react-router-dom"
+
 import { ProfileButton } from './profile-button'
 import { AuthContext } from '../../context/authContext'
 import { auth } from '../../firebase/config'
@@ -34,16 +37,25 @@ export const ProfileMenu = () => {
 
   return (
     <Box sx={{ flexGrow: 0 }}>
-      <IconButton
-        size="large"
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleOpenUserMenu}
-        color="inherit"
-      >
-        <AccountCircle />
-      </IconButton>
+      { state.isUserActive ?
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenUserMenu}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton> :
+        <Button key='login' sx={{ color: '#fff' }}>
+          <Link
+            to={`/login`}
+            style={{ color: 'inherit', textDecoration: 'none' }}>
+            Login
+          </Link>
+        </Button>
+      }
       <Menu
         sx={{ mt: '45px' }}
         id="menu-appbar"
@@ -62,8 +74,7 @@ export const ProfileMenu = () => {
       >
         <ProfileButton label='Profile' handleClick={handleClick} />
         <ProfileButton label='Account' handleClick={handleClick} />
-        { !state.isUserActive && <ProfileButton label='Login' handleClick={handleClick} />}
-        { state.isUserActive && <ProfileButton label='Logout' linkToHome={true} handleClick={handleLogout} />}
+        <ProfileButton label='Logout' linkToHome={true} handleClick={handleLogout} />
       </Menu>
     </Box>
   )
