@@ -53,5 +53,6 @@ export interface UserModel {
   solevProblems?: SolvedProblemModel[]
 }
 export interface UserProfileModel {
-  user: UserModel | null
+  user: any,
+  isUserActive: boolean
 }

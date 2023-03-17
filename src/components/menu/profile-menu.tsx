@@ -1,20 +1,17 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
 import Avatar from '@mui/material/Avatar'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { redirect, useAppDispatch } from '../../redux'
-import { Link } from "react-router-dom"
-
-const settings = ['Profile', 'Account', 'Login', 'Logout']
+import { ProfileButton } from './profile-button'
+import { AuthContext } from '../../context/authContext'
+import { auth } from '../../firebase/config'
+import { signOut } from 'firebase/auth'
 
 export const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-  const dispatch = useAppDispatch()
+  const { state, dispatch } = useContext(AuthContext)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -23,8 +20,15 @@ export const ProfileMenu = () => {
     setAnchorElUser(null)
   }
 
-  const handleClick = (item: string) => {
-    dispatch(redirect(item))
+  const handleClick = () => {
+    setAnchorElUser(null)
+  }
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch({ type: 'SIGNOUT' })
+      })
     setAnchorElUser(null)
   }
 
@@ -56,17 +60,10 @@ export const ProfileMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={() => handleClick(setting)}>
-            <Typography textAlign="center">
-              <Link
-                to={`/${setting}`}
-                style={{ color: 'inherit', textDecoration: 'none' }}>
-                {setting}
-              </Link>
-            </Typography>
-          </MenuItem>
-        ))}
+        <ProfileButton label='Profile' handleClick={handleClick} />
+        <ProfileButton label='Account' handleClick={handleClick} />
+        { !state.isUserActive && <ProfileButton label='Login' handleClick={handleClick} />}
+        { state.isUserActive && <ProfileButton label='Logout' linkToHome={true} handleClick={handleLogout} />}
       </Menu>
     </Box>
   )

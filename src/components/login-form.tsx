@@ -1,20 +1,43 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import { login } from '../firebase/contexts/useAuth'
+import { auth } from '../firebase/config'
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth'
+import { AuthContext } from '../context/authContext'
+import { Navigate } from "react-router-dom"
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { state, dispatch } = useContext(AuthContext)
 
-  const handleSignup = () => {
-    console.log('signed up')
+  if (state.isUserActive) {
+    return <Navigate to='/' replace />
+  }
+
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        dispatch({ type: 'SIGNUP', payload: userCredential.user })
+      })
+      .catch((error) => {
+        console.error(`${error.code}: ${error.message}`)
+      })
   }
 
   const handleLogin = () => {
-    login(email, password)
-    console.log(email, password)
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        dispatch({
+          type: 'SIGNIN',
+          payload: userCredential.user
+        })
+      })
+      .catch((error) => {
+        console.error(`${error.code}: ${error.message}`)
+      })
   }
 
   return (
@@ -55,14 +78,15 @@ export const LoginForm = () => {
       >
         <Button
           variant='outlined'
-          onClick={handleSignup}
+          onClick={handleSignUp}
         >Sign Up</Button>
+
         <Button
           variant='outlined'
           color='inherit'
           onClick={handleLogin}
         >
-          Login
+          Log In
         </Button>
       </div>
     </Box>

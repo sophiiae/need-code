@@ -3,7 +3,6 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import { ProblemModel } from './store/interfaces'
 import { MenuBar, TableWrapper, LoginForm } from './components/index'
-import { useAppSelector } from './redux'
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'

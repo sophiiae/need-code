@@ -14,7 +14,6 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { ProfileMenu } from '../index'
-import { redirect, useAppDispatch } from '../../redux'
 import { Link } from "react-router-dom"
 
 const drawerWidth = 240
@@ -22,14 +21,12 @@ const navItems = ['home', 'problems', 'review']
 
 export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const dispatch = useAppDispatch()
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
   }
 
   const handleClick = (item: string) => {
-    dispatch(redirect(item))
   }
 
   const drawer = (
