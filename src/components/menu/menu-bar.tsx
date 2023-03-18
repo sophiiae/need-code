@@ -19,7 +19,7 @@ import { ProfileMenu } from '../index'
 import { AuthContext } from '../../context/authContext'
 
 const drawerWidth = 240
-const navItems = ['home', 'problems', 'review']
+const navItems: string[] = []
 
 export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -39,13 +39,13 @@ export const MenuBar = () => {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
+        {navItems.length ? navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
-        ))}
+        )): ''}
       </List>
     </Box>
   )

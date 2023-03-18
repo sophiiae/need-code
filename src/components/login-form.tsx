@@ -15,7 +15,7 @@ export const LoginForm = () => {
   const { state, dispatch } = useContext(AuthContext)
 
   if (state.isUserActive) {
-    return <Navigate to='/problems' replace />
+    return <Navigate to='/' replace />
   }
 
   const handleSignUp = () => {

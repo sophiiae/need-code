@@ -1,7 +1,6 @@
-export * from './loading-circle'
+export * from './main-content-wrapper'
 
 // table
-export * from './table/table-wrapper'
 export * from './table/problem-table'
 export * from './table/table-head'
 
@@ -13,3 +12,4 @@ export * from './menu/profile-button'
 export * from './login-form'
 export * from './home'
 export * from './modal'
+export * from './loading-circle'

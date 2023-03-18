@@ -61,7 +61,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - problems.length) : 0
 
   return (
-    <Paper sx={{ width: '100%', mb: 2 }}>
+    <Paper sx={{ marginTop: '20px', width: '100%', mb: 2 }}>
       <Modal />
       <TableContainer>
         <Table

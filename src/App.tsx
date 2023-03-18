@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import { MenuBar, TableWrapper, LoginForm, Home } from './components/index'
+import { MenuBar, MainContentWrapper, LoginForm, Home } from './components/index'
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'
@@ -18,11 +18,8 @@ function App() {
         <Toolbar />
         <Routes>
           <Route path='/' element={
-            state.isUserActive ? <Home /> : <Navigate to='/login' replace />
+            state.isUserActive ? <MainContentWrapper /> : <Navigate to='/login' replace />
           } />
-          <Route path='/home' element={<Navigate to='/' replace />} />
-          <Route path='/problems' element={
-            state.isUserActive ? <TableWrapper /> : <Navigate to='/login' replace />} />
           <Route path='/login' element={<LoginForm />} />
         </Routes>
       </Box>
