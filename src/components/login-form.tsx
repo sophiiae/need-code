@@ -13,7 +13,7 @@ export const LoginForm = () => {
   const { state, dispatch } = useContext(AuthContext)
 
   if (state.isUserActive) {
-    return <Navigate to='/' replace />
+    return <Navigate to='/problems' replace />
   }
 
   const handleSignUp = () => {
@@ -81,7 +81,6 @@ export const LoginForm = () => {
           onClick={handleSignUp}
         >Sign Up</Button>
         <Button
-          autoFocus
           variant='outlined'
           color='inherit'
           onClick={handleLogin}
