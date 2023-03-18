@@ -30,7 +30,7 @@ export interface ProblemModel {
   /**
    * Date of user last submit
    */
-  lastSubmit: Date,
+  lastSubmit: string,
   /**
    * Number of times user has been visited(reviewed) this problem
    */
@@ -46,13 +46,17 @@ export interface SolvedProblemModel {
   solved: number
 }
 
-export interface UserModel {
-  userName: '',
-  password: '',
-  problems: ProblemModel[],
-  solevProblems?: SolvedProblemModel[]
+export interface ProblemsObject {
+  [key: string]: ProblemModel
+}
+export interface UserDataModel {
+  problems: ProblemsObject,
+  solvedProblems?: SolvedProblemModel[],
 }
 export interface UserProfileModel {
   user: any,
-  isUserActive: boolean
+  isUserActive: boolean,
+  hasDataChanged?: boolean,
+  data?: UserDataModel,
+  autoSaveEnabled?: boolean,
 }

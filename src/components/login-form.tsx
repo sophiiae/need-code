@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import { auth } from '../firebase/config'
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthContext } from '../context/authContext'
 import { Navigate } from "react-router-dom"
 
@@ -71,7 +71,7 @@ export const LoginForm = () => {
       <div
         style={{
           width: '300px',
-          margin: '30px',
+          marginTop: '40px',
           display: 'flex',
           justifyContent: 'space-around',
         }}
@@ -80,8 +80,8 @@ export const LoginForm = () => {
           variant='outlined'
           onClick={handleSignUp}
         >Sign Up</Button>
-
         <Button
+          autoFocus
           variant='outlined'
           color='inherit'
           onClick={handleLogin}
