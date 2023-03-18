@@ -37,3 +37,35 @@ export function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => n
   })
   return stabilizedThis.map(el => el[0])
 }
+
+/**
+ * Get string format of current date
+ * @returns str
+ */
+export const getCurrentDateString = () => {
+  const date = new Date()
+  return date.toLocaleDateString("en-US",
+  {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })
+}
+
+/**
+ * Parse the key to string with padding 0s. e.g. 1 => '0001', 33 => '0022'
+ * @param key number
+ * @returns str
+ */
+export const parseKeyToString = (key: number) => {
+  return key.toString().padStart(4, '0')
+}
+
+/**
+ * Get number key from string. e.g. '0005' => 5, '0123' => 123
+ * @param key string
+ * @returns number
+ */
+export const parseStringKeyToInt = (key: string) => {
+  return parseInt(key)
+}

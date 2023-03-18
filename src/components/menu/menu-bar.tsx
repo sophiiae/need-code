@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react'
+import { useContext, useState } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -13,14 +13,17 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { ProfileMenu } from '../index'
 import { Link } from "react-router-dom"
+
+import { ProfileMenu } from '../index'
+import { AuthContext } from '../../context/authContext'
 
 const drawerWidth = 240
 const navItems = ['home', 'problems', 'review']
 
 export const MenuBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { state } = useContext(AuthContext)
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState)
@@ -71,7 +74,7 @@ export const MenuBar = () => {
             </Link>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {state.isUserActive && navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }} onClick={() => handleClick(item)}>
                 <Link
                   to={`/${item}`}
