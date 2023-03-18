@@ -11,6 +11,10 @@ import { closeModal } from '../redux/features/modalSlice'
 import Alert from '@mui/material/Alert'
 import Link from '@mui/material/Link'
 import PanToolAltIcon from '@mui/icons-material/PanToolAlt'
+import { updateProblem } from '../firebase/useDatabase'
+import { getCurrentDateString, parseKeyToString } from '../store/tools'
+import { useContext } from 'react'
+import { AuthContext } from '../context/authContext'
 
 export interface DialogTitleProps {
   label: string
@@ -45,8 +49,15 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 export const Modal = () => {
   const dispatch = useAppDispatch()
   const { open, data } = useAppSelector(state => state.modal)
+  const { state } = useContext(AuthContext)
 
-  const handleClose = () => {
+  const handleClose = async() => {
+    const pid = data.id.toString()
+    updateProblem(state.user.uid, pid, {
+      ...data,
+      solved: data.solved + 1,
+      lastSubmit: getCurrentDateString()
+    })
     dispatch(closeModal())
   }
 

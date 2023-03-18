@@ -1,9 +1,10 @@
-import { ref, set, get, child } from "firebase/database"
+import { ref, set, get, child, update, remove } from "firebase/database"
 import { db } from './config'
-import { UserDataModel } from '../store/interfaces' 
+import { ProblemModel, UserDataModel } from '../store/interfaces' 
 
 export const writeData = (uid: string, data: UserDataModel) => {
   set(ref(db, 'users/' + uid), data)
+   .catch(err => console.error(err))
 }
 
 export const getData = async(uid: string) => {
@@ -13,4 +14,14 @@ export const getData = async(uid: string) => {
     return snapshot.val()
   }
   return {}
+}
+
+export const updateProblem = (uid: string, pid: string, data: ProblemModel) => {
+  const probRef = ref(db, `users/${uid}/problems/${pid}`)
+  update(probRef, data).catch(err => console.error(err))
+}
+
+export const deleteUserData = (uid: string) => {
+  const userRef = ref(db, `users/${uid}`)
+  remove(userRef)
 }

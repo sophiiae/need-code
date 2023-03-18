@@ -32,9 +32,9 @@ export interface ProblemModel {
    */
   lastSubmit: string,
   /**
-   * Number of times user has been visited(reviewed) this problem
+   * Number of times user has been reviewed this problem
    */
-  visited: number,
+  reviewed: number,
   /**
    * Url of user's note. Default: ''
    */

@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../context/authContext'
-import { writeData, getData } from '../firebase/useDatabase'
+import { writeData, getData, deleteUserData } from '../firebase/useDatabase'
 import { problems } from '../assets/problems'
 
 export const Home = () => {
@@ -15,13 +15,20 @@ export const Home = () => {
     console.log(state.user)
   }
 
+  const handleRemove = () => {
+    // delete user
+  }
+ 
   return (
     <>
-      <button onClick={handleWrite}>
+      <button onClick={handleWrite} disabled>
         write data
       </button>
-      <button onClick={handleGet}>
+      <button onClick={handleGet} disabled>
         get data
+      </button>
+      <button onClick={handleRemove} disabled>
+        remove user
       </button>
     </>
   )

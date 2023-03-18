@@ -6,6 +6,8 @@ import { auth } from '../firebase/config'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthContext } from '../context/authContext'
 import { Navigate } from "react-router-dom"
+import { writeData } from '../firebase/useDatabase'
+import { problems } from '../assets/problems'
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -20,6 +22,9 @@ export const LoginForm = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         dispatch({ type: 'SIGNUP', payload: userCredential.user })
+        writeData(userCredential.user.uid, {
+          problems
+        })
       })
       .catch((error) => {
         console.error(`${error.code}: ${error.message}`)

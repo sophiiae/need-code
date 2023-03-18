@@ -3,6 +3,7 @@ import type { RootState } from '../store'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { ProblemModel } from '../../store/interfaces'
 
+
 interface ModalState {
   open: boolean,
   data: ProblemModel
@@ -19,7 +20,7 @@ const initialState: ModalState = {
     favor: 0,
     solved: 0,
     lastSubmit: "2000-01-16T00:00:00.000Z",
-    visited: 0,
+    reviewed: 0,
     noteUrl: ""
   }
 }
