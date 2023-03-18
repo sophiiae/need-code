@@ -1,6 +1,4 @@
 import { useState, MouseEvent } from 'react'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
 import LockIcon from '@mui/icons-material/Lock'
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import Link from '@mui/material/Link'
@@ -13,9 +11,11 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import { ProblemModel } from '../../store/interfaces'
 import { getComparator, stableSort, Order } from '../../store/tools'
-import { ProbTableHead } from '../index'
+import { Modal, ProbTableHead } from '../index'
+import { useAppDispatch } from '../../redux/hooks'
+import { openModal } from '../../redux/features/modalSlice'
 
-export const initDate = new Date('2000-01-16')
+export const initDate = new Date('2001-01-1')
 
 const Difficulty: any = {
   1: { label: 'Easy', color: '#6a994e' },
@@ -37,6 +37,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
   const [orderBy, setOrderBy] = useState<keyof ProblemModel>('id')
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(50)
+  const dispatch = useAppDispatch()
 
   if (!problems) return <></>
 
@@ -60,6 +61,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
 
   return (
     <Paper sx={{ width: '100%', mb: 2 }}>
+      <Modal />
       <TableContainer>
         <Table
           sx={{ minWidth: 920 }}
@@ -114,14 +116,16 @@ export const ProblemTable = ({ problems }: TableProps) => {
                       id={labelId}
                       scope='row'
                       align='left'
-                      style={{ width: '280px', border: 'none' }}
+                      style={{ width: '300px', border: 'none' }}
                     >
                       <Link
-                        href={row.url}
                         color='inherit'
                         underline='none'
-                        target='_blank'
-                        rel='noopener'
+                        onClick={() => dispatch(openModal(row))}
+                        sx={{
+                          ":hover": { color: '#219ebc' },
+                          cursor: 'pointer'
+                        }}
                       >
                         {row.title}
                       </Link>
@@ -158,12 +162,8 @@ export const ProblemTable = ({ problems }: TableProps) => {
                       align='left'
                       style={{ width: '120px', border: 'none' }}
                     >
-                      {row.lastSubmit > initDate
-                        ? row.lastSubmit.toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: 'numeric',
-                        })
+                      {new Date(row.lastSubmit) > initDate
+                        ? row.lastSubmit
                         : ''}
                     </TableCell>
                   </TableRow>
@@ -185,6 +185,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        showFirstButton showLastButton
       />
     </Paper>
   )
