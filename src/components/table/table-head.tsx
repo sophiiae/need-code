@@ -38,11 +38,6 @@ const headCells: readonly HeadCell[] = [
     label: 'Difficulty',
   },
   {
-    id: 'paidOnly',
-    numeric: true,
-    label: 'Paid',
-  },
-  {
     id: 'lastSubmit',
     numeric: true,
     label: 'Last Submit',

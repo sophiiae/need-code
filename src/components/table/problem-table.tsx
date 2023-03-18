@@ -14,6 +14,7 @@ import { getComparator, stableSort, Order } from '../../store/tools'
 import { Modal, ProbTableHead } from '../index'
 import { useAppDispatch } from '../../redux/hooks'
 import { openModal } from '../../redux/features/modalSlice'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export const initDate = new Date('2001-01-1')
 
@@ -95,13 +96,13 @@ export const ProblemTable = ({ problems }: TableProps) => {
                         border: 'none',
                       }}
                     >
-                      <span style={{ color: '#55a630', lineHeight: 1.43 }}>
-                        {row.solved ? (
-                          <TaskAltIcon style={{ paddingTop: '4px', width: '20px' }} />
-                        ) : (
-                          ''
-                        )}
-                      </span>
+                      {row.solved ? (
+                        <TaskAltIcon style={{
+                          paddingTop: '4px',
+                          fontSize: '1.5em',
+                          color: '#55a630' 
+                        }} />
+                      ) : ''}
                     </TableCell>
 
                     <TableCell
@@ -129,6 +130,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
                       >
                         {row.title}
                       </Link>
+                      {row.paidOnly ? <LockOutlinedIcon style={{ fontSize: '0.8rem', paddingTop: '2px', color: '#fb8500', marginLeft: '4px' }} />: ''}
                     </TableCell>
 
                     <TableCell
@@ -136,26 +138,6 @@ export const ProblemTable = ({ problems }: TableProps) => {
                       style={{ width: '60px', border: 'none' }}
                     >
                       {getDifficultyText(row.difficulty)}
-                    </TableCell>
-
-                    <TableCell
-                      padding='none'
-                      align='center'
-                      style={{ width: '20px', border: 'none' }}
-                    >
-                      <span
-                        style={{
-                          color: '#ffb703',
-                          lineHeight: 1.43,
-                          paddingRight: '30px',
-                        }}
-                      >
-                        {row.paidOnly ? (
-                          <LockIcon style={{ paddingTop: '4px', width: '20px' }} />
-                        ) : (
-                          ''
-                        )}
-                      </span>
                     </TableCell>
 
                     <TableCell
