@@ -20,7 +20,6 @@ const initialState: ModalState = {
     favor: 0,
     solved: 0,
     lastSubmit: "2000-01-16T00:00:00.000Z",
-    reviewed: 0,
     noteUrl: ""
   }
 }

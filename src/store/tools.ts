@@ -1,4 +1,7 @@
+import { ProblemsObject, ReviewModel } from './interfaces'
+
 export type Order = 'asc' | 'desc'
+export const totalProblems = 2436
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,4 +53,17 @@ export const getCurrentDateString = () => {
     month: 'numeric',
     day: 'numeric',
   })
+}
+
+export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, review?: ReviewModel) => {
+  if (reviewEnabled && review) {
+    const ids = Object.keys(review)
+    const pick = Math.round((ids.length - 1) * Math.random())
+
+    // return problem id
+    return parseInt(ids[pick])
+  }
+
+  // random pick from all problems
+  return Math.round(totalProblems * Math.random())
 }

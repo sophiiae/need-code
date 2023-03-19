@@ -23,7 +23,8 @@ export const LoginForm = () => {
       .then(userCredential => {
         dispatch({ type: 'SIGNUP', payload: userCredential.user })
         writeData(userCredential.user.uid, {
-          problems
+          problems,
+          review: {}
         })
       })
       .catch((error) => {

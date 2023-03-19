@@ -51,8 +51,12 @@ export const Modal = () => {
   const { open, data } = useAppSelector(state => state.modal)
   const { state } = useContext(AuthContext)
 
-  const handleClose = async() => {
-    const pid = data.id.toString()
+  const handleClose = () => {
+    dispatch(closeModal())
+  }
+
+  const handleSolved = () => {
+    const pid = data.id
     updateProblem(state.user.uid, pid, {
       ...data,
       solved: data.solved + 1,
@@ -88,7 +92,7 @@ export const Modal = () => {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus variant='contained' onClick={handleClose}>
+        <Button autoFocus variant='contained' onClick={handleSolved}>
           Solved!
         </Button>
       </DialogActions>

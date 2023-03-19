@@ -32,27 +32,23 @@ export interface ProblemModel {
    */
   lastSubmit: string,
   /**
-   * Number of times user has been reviewed this problem
-   */
-  reviewed: number,
-  /**
    * Url of user's note. Default: ''
    */
   noteUrl: string,
 }
 
-export interface SolvedProblemModel {
-  id: number,
-  solved: number
+export interface ProblemsObject {
+  [id: number]: ProblemModel
 }
 
-export interface ProblemsObject {
-  [key: string]: ProblemModel
+export interface ReviewModel {
+  [id: number]: number,
 }
 export interface UserDataModel {
   problems: ProblemsObject,
-  solvedProblems?: SolvedProblemModel[],
+  review: ReviewModel
 }
+
 export interface UserProfileModel {
   user: any,
   isUserActive: boolean,
