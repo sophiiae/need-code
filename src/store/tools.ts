@@ -48,13 +48,20 @@ export function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => n
 export const getCurrentDateString = () => {
   const date = new Date()
   return date.toLocaleDateString("en-US",
-  {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  })
+    {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    })
 }
 
+/**
+ * Randomly pick a problem from problem pool or review pool
+ * @param data - all problems
+ * @param reviewEnabled - flag for enable review mode
+ * @param review - review pool
+ * @returns - random problem
+ */
 export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, review?: ReviewModel) => {
   if (reviewEnabled && review) {
     const ids = Object.keys(review)
@@ -66,4 +73,24 @@ export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, revie
 
   // random pick from all problems
   return Math.round(totalProblems * Math.random())
+}
+
+/**
+ * Validate user input. Return problem id if valid
+ * @param value - user input
+ * @returns { pid, err } - problem id and error message
+ */
+export const getPidfromIput = (value: string) => {
+  if (!value) {
+    return { pid: null, err: 'Error: no input value.' }
+  }
+
+  const validId = new RegExp('^[1-9][0-9]*$')
+  const isValid = validId.test(value)
+  const pid = isValid ? parseInt(value) : -1
+
+  if (!isValid || pid <= 0 || pid > 2436) {
+    return { pid: null, err: 'Error: invalid input.' }
+  }
+  return { pid, err: '' }
 }
