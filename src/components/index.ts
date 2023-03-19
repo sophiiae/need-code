@@ -10,6 +10,5 @@ export * from './menu/menu-bar'
 export * from './menu/profile-button'
 
 export * from './login-form'
-export * from './home'
 export * from './modal'
 export * from './loading-circle'
