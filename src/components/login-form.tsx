@@ -85,6 +85,7 @@ export const LoginForm = () => {
         <Button
           variant='outlined'
           onClick={handleSignUp}
+          disabled
         >Sign Up</Button>
         <Button
           variant='outlined'

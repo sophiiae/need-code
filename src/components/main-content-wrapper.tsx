@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, KeyboardEvent } from 'react'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
@@ -16,6 +16,7 @@ import { updateProblem } from '../firebase/useDatabase'
 import { getCurrentDateString, pickProblem } from '../store/tools'
 import { useAppDispatch } from '../redux/hooks'
 import { openModal } from '../redux/features/modalSlice'
+import { KeyCode } from '../store/enum'
 
 export const CustomTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -94,6 +95,14 @@ export const MainContentWrapper = () => {
     dispatch(openModal(data[pick]))
   }
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code == KeyCode.ENTER) {
+      handleAdd()
+    } else {
+      return
+    }
+  }
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -109,7 +118,8 @@ export const MainContentWrapper = () => {
                 setValue(e.target.value)}
               }
               value={value}
-              helperText={error} />
+              helperText={error}
+              onKeyDown={handleKeyDown}/>
           </Box>
           <Button
             variant="contained"
