@@ -58,7 +58,7 @@ export const MainContentWrapper = () => {
       setReview(userData.review)
       setDisableCheckbox(userData.review ? false : true)
     })
-  }, [])
+  }, [state.user.uid])
 
   if (!data) return <LoadingCircle />
 
@@ -96,7 +96,7 @@ export const MainContentWrapper = () => {
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.code == KeyCode.ENTER) {
+    if (e.code === KeyCode.ENTER) {
       handleAdd()
     } else {
       return

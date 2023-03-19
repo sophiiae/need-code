@@ -1,5 +1,4 @@
 import { useState, MouseEvent } from 'react'
-import LockIcon from '@mui/icons-material/Lock'
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'

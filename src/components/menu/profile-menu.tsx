@@ -2,7 +2,6 @@ import { useContext, useState } from 'react'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
-import Avatar from '@mui/material/Avatar'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Button from '@mui/material/Button'
 import { Link } from "react-router-dom"

@@ -45,7 +45,7 @@ const headCells: readonly HeadCell[] = [
 ]
 
 export const ProbTableHead = (props: TableHeadProps) => {
-  const { order, orderBy, rowCount, onRequestSort } = props
+  const { order, orderBy, onRequestSort } = props
   const createSortHandler = (property: keyof ProblemModel) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }
