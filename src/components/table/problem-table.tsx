@@ -60,11 +60,11 @@ export const ProblemTable = ({ problems }: TableProps) => {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - problems.length) : 0
 
   return (
-    <Paper sx={{ marginTop: '20px', width: '100%', mb: 2 }}>
+    <Paper sx={{ m: 2, width: '100%', mt: 1 }}>
       <Modal />
       <TableContainer>
         <Table
-          sx={{ minWidth: 920 }}
+          sx={{ minWidth: 820 }}
           aria-labelledby='ProblemTable'
           size={'medium'}
         >
@@ -99,16 +99,9 @@ export const ProblemTable = ({ problems }: TableProps) => {
                         <TaskAltIcon style={{
                           paddingTop: '4px',
                           fontSize: '1.5em',
-                          color: '#55a630' 
+                          color: '#55a630'
                         }} />
                       ) : ''}
-                    </TableCell>
-
-                    <TableCell
-                      align='left'
-                      style={{ width: '40px', border: 'none' }}
-                    >
-                      {row.id}
                     </TableCell>
 
                     <TableCell
@@ -127,9 +120,9 @@ export const ProblemTable = ({ problems }: TableProps) => {
                           cursor: 'pointer'
                         }}
                       >
-                        {row.title}
+                        {row.id}. {row.title}
                       </Link>
-                      {row.paidOnly ? <LockOutlinedIcon style={{ fontSize: '0.8rem', paddingTop: '2px', color: '#fb8500', marginLeft: '4px' }} />: ''}
+                      {row.paidOnly ? <LockOutlinedIcon style={{ fontSize: '0.8rem', paddingTop: '2px', color: '#fb8500', marginLeft: '4px' }} /> : ''}
                     </TableCell>
 
                     <TableCell
