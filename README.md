@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# Need Code
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web app with React & Firebase that helps people to conquer and review Algorithm problems for coding interview. 
 
-## Available Scripts
+# How to contribute
+! Contact the repo owner for Firebase permission.
 
-In the project directory, you can run:
+## Basic Installation
+Clone the repo with: 
+```bash
+git clone git@github.com:sophiiae/need-code.git
+```
 
-### `npm start`
+Install Node JS v16+ or use [NVM](https://github.com/nvm-sh/nvm)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Install dependencies:
+```bash
+npm install
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Firebase
+1. Learn basic about Firebase [Authentication](https://firebase.google.com/docs/auth/web/start) on Web
 
-### `npm test`
+2. Learn basic about Firebase [Realtime database](https://firebase.google.com/docs/database/web/start)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Learn basic about Firebase [Hosting](https://firebase.google.com/docs/hosting/test-preview-deploy)
 
-### `npm run build`
+### Test and Preview
+1. Check CI and update build folder with
+```bash
+npm ci && npm run build
+```
+2. View changes to the web app before going live with preview channels.
+ttl can be `5m`, `5d`, and so on. Check Firebase website for more infomation.
+```bash
+firebase hosting:channel:deploy <channel-name> --expires <ttl>
+```
+3. Clean up preview channel
+```bash
+firebase hosting:channel:delete <channel-name>
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Pull requests
+1. Create a preview channel for changes.
+```bash
+firebase hosting:channel:deploy <PR-name> --expires 7d
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Push branch and create a PR for review. Add related issue number and preview channel link in PR description.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# Bug and feature reqeusts
+Have a bug or a feature request? [Open an issue](https://github.com/sophiiae/need-code/issues/new)
