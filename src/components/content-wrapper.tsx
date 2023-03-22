@@ -10,7 +10,7 @@ import { onValue, ref } from 'firebase/database'
 
 import { AuthContext } from '../context/authContext'
 import { db } from '../firebase/config'
-import { ProblemModel, ProblemsObject, ReviewModel } from '../store/interfaces'
+import { ProblemModel, ProblemsObject, ReviewModel, UserProfileModel } from '../store/interfaces'
 import { ProblemTable, LoadingCircle } from './index'
 import { updateProblem } from '../firebase/useDatabase'
 import { pickProblem, getPidfromIput } from '../store/tools'
@@ -38,13 +38,16 @@ export const CustomTextField = styled(TextField)({
   },
 });
 
-export const MainContentWrapper = () => {
+interface ContentWrapperProp {
+  state: UserProfileModel
+}
+
+export const ContentWrapper = ({ state }: ContentWrapperProp) => {
   const [data, setData] = useState<ProblemsObject>()
   const [list, setList] = useState<ProblemModel[]>([])
   const [review, setReview] = useState<ReviewModel>()
   const [disableCheckbox, setDisableCheckbox] = useState(true)
   const [reviewEnabled, setReviewEnabled] = useState(false)
-  const { state } = useContext(AuthContext)
   const [value, setValue] = useState<string>('')
   const [error, setError] = useState<string>()
   const dispatch = useAppDispatch()

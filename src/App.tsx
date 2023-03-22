@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import { MenuBar, MainContentWrapper, LoginForm } from './components/index'
+import { MenuBar, ContentWrapper, LoginForm } from './components/index'
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'
@@ -18,7 +18,7 @@ function App() {
         <Toolbar />
         <Routes>
           <Route path='/' element={
-            state.isUserActive ? <MainContentWrapper /> : <Navigate to='/login' replace />
+            state.isUserActive ? <ContentWrapper state={ state }/> : <Navigate to='/login' replace />
           } />
           <Route path='/login' element={<LoginForm />} />
         </Routes>

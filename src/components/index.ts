@@ -1,4 +1,4 @@
-export * from './main-content-wrapper'
+export * from './content-wrapper'
 
 // table
 export * from './table/problem-table'
