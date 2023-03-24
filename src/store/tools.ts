@@ -55,6 +55,16 @@ export const getCurrentDateString = () => {
     })
 }
 
+// Sort by second column value for 2D arra
+const compareSecondColumn = (a: any, b: any) => {
+  if (a[1] === b[1]) {
+    return 0;
+  }
+  else {
+    return (a[1] < b[1]) ? -1 : 1;
+  }
+}
+
 /**
  * Randomly pick a problem from problem pool or review pool
  * @param data - all problems
@@ -64,11 +74,44 @@ export const getCurrentDateString = () => {
  */
 export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, review?: ReviewModel) => {
   if (reviewEnabled && review) {
-    const ids = Object.keys(review)
-    const pick = Math.round((ids.length - 1) * Math.random())
+    // Convert review object to a 2D array
+    let sorted: number[][] = []
+    for (const key in review) {
+      sorted.push([parseInt(key), review[key]])
+    }
+
+    // Sort the review array by reviewed count ASCE
+    sorted.sort(compareSecondColumn)
+    const max = sorted[sorted.length - 1][1]
+
+    // Calculate weight so least reviewed problems get most weight
+    for (let i = 0; i < sorted.length; i++) {
+      sorted[i][1] = max - sorted[i][1]
+    }
+
+    // Calculate prefix sum
+    const prefixSum = [sorted[0][0]]
+    let total = sorted[0][0]
+    for (let i = 1; i < sorted.length; i++) {
+      total += sorted[i][1]
+      prefixSum[i] = total
+    }
+
+    // Random pick with weight
+    // ref: https://leetcode.com/problems/random-pick-with-weight/
+    const pick = Math.random() * total
+    let l = 0, r = prefixSum.length
+    while (l < r) {
+      const m = l + (r - l) / 2
+      if (prefixSum[m] < pick) {
+        l = m + 1
+      } else {
+        r = m
+      }
+    }
 
     // return problem id
-    return parseInt(ids[pick])
+    return sorted[l][0]
   }
 
   // random pick from all problems
