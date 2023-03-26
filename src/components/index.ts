@@ -1,6 +1,7 @@
 export * from './content-wrapper'
 export * from './modal'
 export * from './loading-circle'
+export * from './error-text'
 
 // table
 export * from './table/problem-table'

@@ -9,12 +9,14 @@ import { Navigate } from "react-router-dom"
 import { writeData } from '../firebase/useDatabase'
 import { problems } from '../assets/problems'
 import { addUsername } from '../redux/features/userSlice'
+import { ErrorText } from './index'
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSignup, setIsSignup] = useState(false)
+  const [error, setError] = useState('')
   const { state, dispatch } = useContext(AuthContext)
 
   if (state.isUserActive) {
@@ -26,20 +28,27 @@ export const LoginForm = () => {
   }
 
   const handleSignUp = () => {
-    setIsSignup(true)
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        dispatch({ type: 'SIGNUP', payload: userCredential.user })
-        writeData(userCredential.user.uid, {
-          problems,
-          review: {},
-          settings: { username }
+    if (isSignup && !username) {
+      setError('Error: invalid username. Username must only contains letters, numbers, - or _')
+      return
+    }
+    if (isSignup) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          dispatch({ type: 'SIGNUP', payload: userCredential.user })
+          writeData(userCredential.user.uid, {
+            problems,
+            review: {},
+            settings: { username }
+          })
+          dispatch(addUsername(username))
         })
-        dispatch(addUsername(username))
-      })
-      .catch((error) => {
-        console.error(`${error.code}: ${error.message}`)
-      })
+        .catch((err) => {
+          setError(err.message)
+          console.error(`${err.code}: ${err.message}`)
+        })
+    }
+    setIsSignup(true)
   }
 
   const handleLogin = () => {
@@ -51,8 +60,9 @@ export const LoginForm = () => {
           payload: userCredential.user
         })
       })
-      .catch((error) => {
-        console.error(`${error.code}: ${error.message}`)
+      .catch((err) => {
+        setError(err.message)
+        console.error(`${err.code}: ${err.message}`)
       })
   }
 
@@ -96,6 +106,7 @@ export const LoginForm = () => {
           onChange={e => setPassword(e.target.value)}
         />
       </div>
+      <ErrorText message={error} />
       <div
         style={{
           width: '300px',

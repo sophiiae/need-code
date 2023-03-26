@@ -9,6 +9,7 @@ import { ProblemsObject } from '../../store/interfaces'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { CardActions, CardContent } from '@mui/material'
+import { ErrorText } from '../index'
 
 export const CustomTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -37,7 +38,7 @@ interface ProblemSettingCardProp {
 
 export const ProblemSettingCard = ({ user, problems }: ProblemSettingCardProp) => {
   const [value, setValue] = useState<string>('')
-  const [error, setError] = useState<string>()
+  const [error, setError] = useState<string>('')
 
   const handleAdd = () => {
     const { pid, err } = getPidfromIput(value)
@@ -82,9 +83,7 @@ export const ProblemSettingCard = ({ user, problems }: ProblemSettingCardProp) =
           }}
           value={value}
           onKeyDown={handleKeyDown} />
-        <Typography sx={{ ml: 1, mt: 1, color: '#e63946', fontSize: 12 }}>
-          {error}
-        </Typography>
+        <ErrorText message={error} />
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button

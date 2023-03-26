@@ -125,7 +125,7 @@ export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, revie
  */
 export const getPidfromIput = (value: string) => {
   if (!value) {
-    return { pid: null, err: 'Error: no input value.' }
+    return { pid: null, err: 'Error: no input value. Input must be a number.' }
   }
 
   const validId = new RegExp('^[1-9][0-9]*$')
