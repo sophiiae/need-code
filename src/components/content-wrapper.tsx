@@ -30,7 +30,7 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
       // Avoid browser listener error
       return true
     })
-  }, [state.user.uid])
+  }, [state.user.uid, dispatch])
 
   if (!problems) return <LoadingCircle />
 

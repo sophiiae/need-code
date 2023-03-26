@@ -1,4 +1,6 @@
 export * from './content-wrapper'
+export * from './modal'
+export * from './loading-circle'
 
 // table
 export * from './table/problem-table'
@@ -14,5 +16,3 @@ export * from './menu/profile-button'
 export * from './cards/problem-setting-card'
 
 export * from './login-form'
-export * from './modal'
-export * from './loading-circle'

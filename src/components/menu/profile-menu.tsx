@@ -78,7 +78,7 @@ export const ProfileMenu = () => {
         {
           !!user.username ?
             <MenuItem key='user-name' onClick={handleClick}>
-              <Typography textAlign="center">
+              <Typography textAlign="center" sx={{ color: '#ffb703' }}>
                 {user.username}
               </Typography>
             </MenuItem> : null

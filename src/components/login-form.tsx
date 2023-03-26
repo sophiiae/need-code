@@ -14,13 +14,19 @@ export const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isSignup, setIsSignup] = useState(false)
   const { state, dispatch } = useContext(AuthContext)
 
   if (state.isUserActive) {
     return <Navigate to='/' replace />
   }
 
+  const handleCancel = () => {
+    setIsSignup(false)
+  }
+
   const handleSignUp = () => {
+    setIsSignup(true)
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         dispatch({ type: 'SIGNUP', payload: userCredential.user })
@@ -58,16 +64,18 @@ export const LoginForm = () => {
         '& .MuiTextField-root': { m: 1, width: '300px' },
       }}
     >
-      <div>
-        <TextField
-          required
-          id='username'
-          label='Username'
-          variant='outlined'
-          type='text'
-          onChange={e => setUsername(e.target.value)}
-        />
-      </div>
+      {isSignup ?
+        <div>
+          <TextField
+            required
+            id='username'
+            label='Username'
+            variant='outlined'
+            type='text'
+            onChange={e => setUsername(e.target.value)}
+          />
+        </div> : null
+      }
       <div>
         <TextField
           required
@@ -96,17 +104,28 @@ export const LoginForm = () => {
           justifyContent: 'space-around',
         }}
       >
+        {
+          isSignup &&
+          <Button
+            color='error'
+            variant='outlined'
+            onClick={handleCancel}
+          >Cancel</Button>
+        }
         <Button
           variant='outlined'
           onClick={handleSignUp}
         >Sign Up</Button>
-        <Button
-          variant='outlined'
-          color='inherit'
-          onClick={handleLogin}
-        >
-          Log In
-        </Button>
+        {
+          !isSignup &&
+          <Button
+            variant='outlined'
+            color='inherit'
+            onClick={handleLogin}
+          >
+            Log In
+          </Button>
+        }
       </div>
     </Box>
   )
