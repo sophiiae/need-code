@@ -8,8 +8,10 @@ import { AuthContext } from '../context/authContext'
 import { Navigate } from "react-router-dom"
 import { writeData } from '../firebase/useDatabase'
 import { problems } from '../assets/problems'
+import { addUsername } from '../redux/features/userSlice'
 
 export const LoginForm = () => {
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { state, dispatch } = useContext(AuthContext)
@@ -24,8 +26,10 @@ export const LoginForm = () => {
         dispatch({ type: 'SIGNUP', payload: userCredential.user })
         writeData(userCredential.user.uid, {
           problems,
-          review: {}
+          review: {},
+          settings: { username }
         })
+        dispatch(addUsername(username))
       })
       .catch((error) => {
         console.error(`${error.code}: ${error.message}`)
@@ -57,6 +61,16 @@ export const LoginForm = () => {
       <div>
         <TextField
           required
+          id='username'
+          label='Username'
+          variant='outlined'
+          type='text'
+          onChange={e => setUsername(e.target.value)}
+        />
+      </div>
+      <div>
+        <TextField
+          required
           id='email'
           label='Email'
           variant='outlined'
@@ -85,7 +99,6 @@ export const LoginForm = () => {
         <Button
           variant='outlined'
           onClick={handleSignUp}
-          disabled
         >Sign Up</Button>
         <Button
           variant='outlined'

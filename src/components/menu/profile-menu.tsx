@@ -10,10 +10,14 @@ import { signOut } from 'firebase/auth'
 import { ProfileButton } from '../index'
 import { AuthContext } from '../../context/authContext'
 import { auth } from '../../firebase/config'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
+import { useAppSelector } from '../../redux/hooks'
 
 export const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const { state, dispatch } = useContext(AuthContext)
+  const user = useAppSelector(state => state.user)
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget)
@@ -71,6 +75,14 @@ export const ProfileMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
+        {
+          !!user.username ?
+            <MenuItem key='user-name' onClick={handleClick}>
+              <Typography textAlign="center">
+                {user.username}
+              </Typography>
+            </MenuItem> : null
+        }
         <ProfileButton label='Profile' handleClick={handleClick} />
         <ProfileButton label='Account' handleClick={handleClick} />
         <ProfileButton label='Logout' linkToHome={true} handleClick={handleLogout} />

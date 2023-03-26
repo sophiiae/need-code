@@ -46,7 +46,12 @@ export interface ReviewModel {
 }
 export interface UserDataModel {
   problems: ProblemsObject,
-  review: ReviewModel
+  review: ReviewModel,
+  settings: UserSettings
+}
+
+export interface UserSettings {
+  username: string,
 }
 
 export interface UserProfileModel {
@@ -54,5 +59,5 @@ export interface UserProfileModel {
   isUserActive: boolean,
   hasDataChanged?: boolean,
   data?: UserDataModel,
-  autoSaveEnabled?: boolean,
+  settings: UserSettings
 }

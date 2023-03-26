@@ -6,19 +6,20 @@ import { UserProfileModel } from '../store/interfaces'
 const initialState: UserProfileModel = {
   user: null,
   isUserActive: false,
+  settings: { username: '' }
 }
 
-export const AuthContext = createContext<{state: UserProfileModel, dispatch: Dispatch<any>}>({
+export const AuthContext = createContext<{ state: UserProfileModel, dispatch: Dispatch<any> }>({
   state: initialState,
   dispatch: () => null
 })
 
 export const AuthProvider = ({ children }: any) => {
-  const [ state, dispatch ] = useReducer(authReducer, initialState)
+  const [state, dispatch] = useReducer(authReducer, initialState)
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
-      { children }
+      {children}
     </AuthContext.Provider>
   )
 }
