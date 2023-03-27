@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react'
+import { useState, MouseEvent, ChangeEvent } from 'react'
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
@@ -6,14 +6,17 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import { ProblemModel } from '../../store/interfaces'
 import { getComparator, stableSort, Order } from '../../store/tools'
 import { Modal, ProbTableHead } from '../index'
 import { useAppDispatch } from '../../redux/hooks'
 import { openModal } from '../../redux/features/modalSlice'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import Pagination from '@mui/material/Pagination'
+import Box from '@mui/material/Box'
 
 export const initDate = new Date('2001-01-1')
 
@@ -28,15 +31,26 @@ const getDifficultyText = (level: number) => {
   return <span style={{ color: color }}>{label}</span>
 }
 
+interface rowsPerPageItemType {
+  label: string,
+  value: number
+}
+
+const rowsPerPageItems: rowsPerPageItemType[] = [
+  { label: '20/page', value: 20 },
+  { label: '50/page', value: 50 },
+  { label: '100/page', value: 100 },
+]
+
 export interface TableProps {
-  problems: ProblemModel[]
+  problems: ProblemModel[],
 }
 
 export const ProblemTable = ({ problems }: TableProps) => {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof ProblemModel>('id')
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(50)
+  const [page, setPage] = useState(1) // MUI pagination is 1-indexed
+  const [rowsPerPage, setRowsPerPage] = useState<number>(50)
   const dispatch = useAppDispatch()
 
   if (!problems) return <></>
@@ -51,16 +65,13 @@ export const ProblemTable = ({ problems }: TableProps) => {
     setPage(newPage)
   }
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
+  const handleChangeRows = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value))
+    setPage(1)
   }
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - problems.length) : 0
-
   return (
-    <Paper sx={{ m: 2, width: '100%', mt: 1 }}>
+    <Paper sx={{ m: 2, width: '100%', mt: 1, boxShadow: 'none' }}>
       <Modal />
       <TableContainer>
         <Table
@@ -76,7 +87,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
           />
           <TableBody>
             {stableSort(problems, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`
 
@@ -143,24 +154,30 @@ export const ProblemTable = ({ problems }: TableProps) => {
                   </TableRow>
                 )
               })}
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[20, 50, 100]}
-        component='div'
-        count={problems.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        showFirstButton showLastButton
-      />
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Select
+          size='small'
+          value={rowsPerPage}
+          onChange={(e: any) => handleChangeRows(e)}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Change rows per page' }}
+        >
+          {rowsPerPageItems.map((item: rowsPerPageItemType) => (
+            <MenuItem key={item.label} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <Pagination
+          page={page}
+          count={Math.ceil(problems.length / rowsPerPage)}
+          onChange={handleChangePage}
+          showFirstButton
+          showLastButton />
+      </Box>
     </Paper>
   )
 }
