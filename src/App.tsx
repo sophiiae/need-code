@@ -18,13 +18,13 @@ function App() {
         <Toolbar />
         <Routes>
           <Route path='/' element={
-            state.isUserActive ? <ContentWrapper state={ state }/> : <Navigate to='/login' replace />
+            state.isUserActive ? <ContentWrapper state={state} /> : <Navigate to='/login' replace />
           } />
           <Route path='/login' element={<LoginForm />} />
         </Routes>
       </Box>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
