@@ -22,7 +22,7 @@ export const UtilityBar = () => {
   }
 
   const handlePick = () => {
-    const pick = pickProblem(problems, reviewEnabled, review)
+    const pick = pickProblem(reviewEnabled, review)
     dispatch(openModal(problems[pick]))
   }
 

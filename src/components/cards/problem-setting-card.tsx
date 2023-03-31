@@ -5,11 +5,12 @@ import TextField from '@mui/material/TextField'
 import { getPidfromIput } from '../../store/tools'
 import { updateProblem } from '../../firebase/useDatabase'
 import { KeyCode } from '../../store/enum'
-import { ProblemsObject } from '../../store/interfaces'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import { CardActions, CardContent } from '@mui/material'
 import { ErrorText } from '../index'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { resetSingleProblem, updateSingleProblem } from '../../redux/features/tableSlice'
 
 export const CustomTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -33,17 +34,19 @@ export const CustomTextField = styled(TextField)({
 
 interface ProblemSettingCardProp {
   user: any,
-  problems: ProblemsObject
 }
 
-export const ProblemSettingCard = ({ user, problems }: ProblemSettingCardProp) => {
+export const ProblemSettingCard = ({ user }: ProblemSettingCardProp) => {
   const [value, setValue] = useState<string>('')
   const [error, setError] = useState<string>('')
+  const { problems } = useAppSelector(state => state.table)
+  const dispatch = useAppDispatch()
 
   const handleAdd = () => {
     const { pid, err } = getPidfromIput(value)
     if (pid) {
       setValue('')
+      dispatch(updateSingleProblem(pid))
       updateProblem(user.uid, pid, problems[pid])
     } else {
       setError(err)
@@ -53,6 +56,7 @@ export const ProblemSettingCard = ({ user, problems }: ProblemSettingCardProp) =
   const handleReset = () => {
     const { pid, err } = getPidfromIput(value)
     if (pid) {
+      dispatch(resetSingleProblem(pid))
       updateProblem(user.uid, pid, problems[pid], true)
     } else {
       setError(err)

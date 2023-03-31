@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { addUsername } from '../redux/features/userSlice'
 import { getData } from '../firebase/useDatabase'
-import { updateProblems, updateReview } from '../redux/features/tableSlice'
+import { updateAllProblems, updateAllReview } from '../redux/features/tableSlice'
 
 interface ContentWrapperProp {
   state: UserProfileModel
@@ -17,13 +17,13 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
 
   useEffect(() => {
     getData(state.user.uid).then(data => {
-      dispatch(updateProblems(data.problems))
-      dispatch(updateReview(data.review))
+      dispatch(updateAllProblems(data.problems))
+      dispatch(updateAllReview(data.review))
       dispatch(addUsername(data.settings.username))
     })
   }, [state.user.uid, dispatch])
 
-  if (!problems) return <LoadingCircle />
+  if (Object.keys(problems).length === 0) return <LoadingCircle />
 
   return (
     <div style={{ display: 'flex', justifyContent: 'space-round' }}>
@@ -32,7 +32,7 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
         <ProblemTable />
       </Box>
       <Box sx={{ m: 2 }}>
-        <ProblemSettingCard user={state.user} problems={problems} />
+        <ProblemSettingCard user={state.user} />
       </Box>
     </div>
   )

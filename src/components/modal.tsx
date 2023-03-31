@@ -12,9 +12,9 @@ import Alert from '@mui/material/Alert'
 import Link from '@mui/material/Link'
 import PanToolAltIcon from '@mui/icons-material/PanToolAlt'
 import { updateProblem } from '../firebase/useDatabase'
-import { getCurrentDateString } from '../store/tools'
 import { useContext } from 'react'
 import { AuthContext } from '../context/authContext'
+import { updateSingleProblem } from '../redux/features/tableSlice'
 
 export interface DialogTitleProps {
   label: string
@@ -50,6 +50,7 @@ export const Modal = () => {
   const dispatch = useAppDispatch()
   const { open, data } = useAppSelector(state => state.modal)
   const { state } = useContext(AuthContext)
+  const { problems } = useAppSelector(state => state.table)
 
   const handleClose = () => {
     dispatch(closeModal())
@@ -57,11 +58,8 @@ export const Modal = () => {
 
   const handleSolved = () => {
     const pid = data.id
-    updateProblem(state.user.uid, pid, {
-      ...data,
-      solved: data.solved + 1,
-      lastSubmit: getCurrentDateString()
-    })
+    dispatch(updateSingleProblem(pid))
+    updateProblem(state.user.uid, pid, problems[pid])
     dispatch(closeModal())
   }
 
@@ -72,7 +70,7 @@ export const Modal = () => {
       open={open}
     >
       <BootstrapDialogTitle label="customized-dialog-title" onClose={handleClose}>
-        {data.id}. { data.title }
+        {data.id}. {data.title}
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Alert severity="warning">Make sure you have solved the problem before you click the button. Otherwise, it would affect the accuracy of review stack.</Alert>
