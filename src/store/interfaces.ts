@@ -41,12 +41,12 @@ export interface ProblemsObject {
   [id: number]: ProblemModel
 }
 
-export interface ReviewModel {
+export interface ReviewObject {
   [id: number]: number,
 }
 export interface UserDataModel {
   problems: ProblemsObject,
-  review: ReviewModel,
+  review: ReviewObject,
   settings: UserSettings
 }
 

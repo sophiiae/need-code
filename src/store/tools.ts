@@ -1,4 +1,4 @@
-import { ProblemsObject, ReviewModel } from './interfaces'
+import { ProblemsObject, ReviewObject } from './interfaces'
 
 export type Order = 'asc' | 'desc'
 export const totalProblems = 2436
@@ -72,7 +72,7 @@ const compareSecondColumn = (a: any, b: any) => {
  * @param review - review pool
  * @returns - random problem
  */
-export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, review?: ReviewModel) => {
+export const pickProblem = (data: ProblemsObject, reviewEnabled?: boolean, review?: ReviewObject) => {
   if (reviewEnabled && review) {
     // Convert review object to a 2D array
     let sorted: number[][] = []

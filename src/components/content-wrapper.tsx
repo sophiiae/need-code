@@ -1,34 +1,25 @@
-import { useEffect, useState } from 'react'
-import { onValue, ref } from 'firebase/database'
-
-import { db } from '../firebase/config'
-import { ProblemModel, ProblemsObject, ReviewModel, UserProfileModel } from '../store/interfaces'
+import { useEffect } from 'react'
+import { UserProfileModel } from '../store/interfaces'
 import { ProblemTable, LoadingCircle, UtilityBar, ProblemSettingCard } from './index'
 import Box from '@mui/material/Box'
-import { useAppDispatch } from '../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { addUsername } from '../redux/features/userSlice'
+import { getData } from '../firebase/useDatabase'
+import { updateProblems, updateReview } from '../redux/features/tableSlice'
 
 interface ContentWrapperProp {
   state: UserProfileModel
 }
 
 export const ContentWrapper = ({ state }: ContentWrapperProp) => {
-  const [problems, setProblems] = useState<ProblemsObject>()
-  const [list, setList] = useState<ProblemModel[]>([])
-  const [review, setReview] = useState<ReviewModel>()
   const dispatch = useAppDispatch()
+  const { problems } = useAppSelector(state => state.table)
 
   useEffect(() => {
-    const userRef = ref(db, `users/${state.user.uid}`)
-    onValue(userRef, (snapshot) => {
-      const userData = snapshot.val()
-      setProblems(userData.problems)
-      setList(Object.values(userData.problems))
-      setReview(userData.review)
-      dispatch(addUsername(userData.settings ? userData.settings.username : ''))
-
-      // Avoid browser listener error
-      return true
+    getData(state.user.uid).then(data => {
+      dispatch(updateProblems(data.problems))
+      dispatch(updateReview(data.review))
+      dispatch(addUsername(data.settings.username))
     })
   }, [state.user.uid, dispatch])
 
@@ -37,8 +28,8 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-round' }}>
       <Box sx={{ m: 2, display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
-        <UtilityBar problems={problems} review={review} />
-        <ProblemTable problems={list} />
+        <UtilityBar />
+        <ProblemTable />
       </Box>
       <Box sx={{ m: 2 }}>
         <ProblemSettingCard user={state.user} problems={problems} />

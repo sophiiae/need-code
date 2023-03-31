@@ -10,7 +10,7 @@ import TableRow from '@mui/material/TableRow'
 import { ProblemModel } from '../../store/interfaces'
 import { getComparator, stableSort, Order } from '../../store/tools'
 import { Modal, ProbTableHead } from '../index'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { openModal } from '../../redux/features/modalSlice'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Select from '@mui/material/Select'
@@ -42,16 +42,14 @@ const rowsPerPageItems: rowsPerPageItemType[] = [
   { label: '100/page', value: 100 },
 ]
 
-export interface TableProps {
-  problems: ProblemModel[],
-}
-
-export const ProblemTable = ({ problems }: TableProps) => {
+export const ProblemTable = () => {
+  const { problems } = useAppSelector(state => state.table)
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof ProblemModel>('id')
   const [page, setPage] = useState(1) // MUI pagination is 1-indexed
   const [rowsPerPage, setRowsPerPage] = useState<number>(50)
   const dispatch = useAppDispatch()
+  const problemList: ProblemModel[] = Object.values(problems)
 
   if (!problems) return <></>
 
@@ -83,10 +81,10 @@ export const ProblemTable = ({ problems }: TableProps) => {
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
-            rowCount={problems.length}
+            rowCount={problemList.length}
           />
           <TableBody>
-            {stableSort(problems, getComparator(order, orderBy))
+            {stableSort(problemList, getComparator(order, orderBy))
               .slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 const labelId = `enhanced-table-checkbox-${index}`
@@ -173,7 +171,7 @@ export const ProblemTable = ({ problems }: TableProps) => {
         </Select>
         <Pagination
           page={page}
-          count={Math.ceil(problems.length / rowsPerPage)}
+          count={Math.ceil(problemList.length / rowsPerPage)}
           onChange={handleChangePage}
           showFirstButton
           showLastButton />

@@ -2,21 +2,16 @@ import { useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { ProblemsObject, ReviewModel } from '../../store/interfaces'
 import ShuffleOnIcon from '@mui/icons-material/ShuffleOn'
-import { useAppDispatch } from '../../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { pickProblem } from '../../store/tools'
 import { openModal } from '../../redux/features/modalSlice'
 
-interface UtilityBarProp {
-  problems: ProblemsObject,
-  review?: ReviewModel
-}
-
-export const UtilityBar = ({ problems, review }: UtilityBarProp) => {
+export const UtilityBar = () => {
+  const { problems, review } = useAppSelector(state => state.table)
+  const dispatch = useAppDispatch()
   const [disableCheckbox, setDisableCheckbox] = useState(!review)
   const [reviewEnabled, setReviewEnabled] = useState(false)
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     setDisableCheckbox(!review)
