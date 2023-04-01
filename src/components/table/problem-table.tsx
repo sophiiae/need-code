@@ -18,7 +18,7 @@ import { getComparator, stableSort, Order } from '../../store/tools'
 import { Modal, ProbTableHead } from '../index'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { openModal } from '../../redux/features/modalSlice'
-import { StatusFilterValues, TableFilterType } from '../../store/enum'
+import { StatusFilterValues } from '../../store/enum'
 import { Typography } from '@mui/material'
 
 export const initDate = new Date('2001-01-1')
