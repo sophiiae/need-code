@@ -26,7 +26,7 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
   if (Object.keys(problems).length === 0) return <LoadingCircle />
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-round' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <Box sx={{ m: 2, display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
         <UtilityBar />
         <ProblemTable />
