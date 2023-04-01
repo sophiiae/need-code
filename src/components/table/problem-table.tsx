@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ChangeEvent } from 'react'
+import { useState, MouseEvent, ChangeEvent, useCallback, useEffect } from 'react'
 import TaskAltIcon from '@mui/icons-material/TaskAlt'
 import Link from '@mui/material/Link'
 import Paper from '@mui/material/Paper'
@@ -7,16 +7,19 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import { ProblemModel } from '../../store/interfaces'
-import { getComparator, stableSort, Order } from '../../store/tools'
-import { Modal, ProbTableHead } from '../index'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { openModal } from '../../redux/features/modalSlice'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Pagination from '@mui/material/Pagination'
 import Box from '@mui/material/Box'
+
+import { ProblemModel } from '../../store/interfaces'
+import { getComparator, stableSort, Order } from '../../store/tools'
+import { Modal, ProbTableHead } from '../index'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { openModal } from '../../redux/features/modalSlice'
+import { StatusFilterValues, TableFilterType } from '../../store/enum'
+import { Typography } from '@mui/material'
 
 export const initDate = new Date('2001-01-1')
 
@@ -43,13 +46,47 @@ const rowsPerPageItems: rowsPerPageItemType[] = [
 ]
 
 export const ProblemTable = () => {
-  const { problems } = useAppSelector(state => state.table)
+  const { problems, filters } = useAppSelector(state => state.table)
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof ProblemModel>('id')
   const [page, setPage] = useState(1) // MUI pagination is 1-indexed
   const [rowsPerPage, setRowsPerPage] = useState<number>(50)
   const dispatch = useAppDispatch()
-  const problemList: ProblemModel[] = Object.values(problems)
+  const [problemList, setProblemList] = useState<ProblemModel[]>(Object.values(problems))
+
+  const filterList = useCallback(() => {
+    let filteredList = Object.values(problems)
+
+    if (filters) {
+      const { Difficulty, Status } = filters
+      if (Difficulty) {
+        filteredList = filteredList.filter((problem: ProblemModel) =>
+          problem.difficulty === parseInt(Difficulty))
+      }
+
+      if (Status) {
+        switch (Status) {
+          case StatusFilterValues.FAVOR:
+            filteredList = filteredList.filter((problem: ProblemModel) =>
+              problem.favor)
+            break
+          case StatusFilterValues.PREMIUM:
+            filteredList = filteredList.filter((problem: ProblemModel) =>
+              problem.paidOnly)
+            break
+          case StatusFilterValues.SOLVED:
+            filteredList = filteredList.filter((problem: ProblemModel) =>
+              problem.solved)
+            break
+        }
+      }
+    }
+    setProblemList(filteredList)
+  }, [filters, problems])
+
+  useEffect(() => {
+    filterList()
+  }, [filters, filterList])
 
   if (!problems) return <></>
 
@@ -155,27 +192,29 @@ export const ProblemTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Select
-          size='small'
-          value={rowsPerPage}
-          onChange={(e: any) => handleChangeRows(e)}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Change rows per page' }}
-        >
-          {rowsPerPageItems.map((item: rowsPerPageItemType) => (
-            <MenuItem key={item.label} value={item.value}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-        <Pagination
-          page={page}
-          count={Math.ceil(problemList.length / rowsPerPage)}
-          onChange={handleChangePage}
-          showFirstButton
-          showLastButton />
-      </Box>
+      {problemList.length ?
+        <Box sx={{ mt: 2, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Select
+            size='small'
+            value={rowsPerPage}
+            onChange={(e: any) => handleChangeRows(e)}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Change rows per page' }}
+          >
+            {rowsPerPageItems.map((item: rowsPerPageItemType) => (
+              <MenuItem key={item.label} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+          <Pagination
+            page={page}
+            count={Math.ceil(problemList.length / rowsPerPage)}
+            onChange={handleChangePage}
+            showFirstButton
+            showLastButton />
+        </Box>
+        : <Typography sx={{ m: 2, textAlign: 'center' }}>No data found.</Typography>}
     </Paper>
   )
 }

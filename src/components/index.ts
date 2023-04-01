@@ -7,6 +7,7 @@ export * from './error-text'
 export * from './table/problem-table'
 export * from './table/table-head'
 export * from './table/utility-bar'
+export * from './table/table-filter'
 
 // menu
 export * from './menu/profile-menu'

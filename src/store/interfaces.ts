@@ -1,3 +1,5 @@
+import { StatusFilterValues, TableFilterType } from './enum'
+
 export interface ProblemModel {
   /**
    * Unique id of problem
@@ -60,4 +62,14 @@ export interface UserProfileModel {
   hasDataChanged?: boolean,
   data?: UserDataModel,
   settings: UserSettings
+}
+
+type TableFilterValueType = string |
+  StatusFilterValues.FAVOR |
+  StatusFilterValues.PREMIUM |
+  StatusFilterValues.SOLVED
+
+export interface TableFiltersModel {
+  [TableFilterType.DIFFICULTY]?: TableFilterValueType
+  [TableFilterType.STATUS]?: TableFilterValueType
 }

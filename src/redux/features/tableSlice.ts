@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { ProblemsObject, ReviewObject } from '../../store/interfaces'
+import { ProblemsObject, ReviewObject, TableFiltersModel } from '../../store/interfaces'
 import { getCurrentDateString } from '../../store/tools'
 
 interface TableState {
   problems: ProblemsObject,
   review: ReviewObject,
+  filters?: TableFiltersModel
 }
 
 const initialState: TableState = {
@@ -47,6 +48,17 @@ export const tableSlice = createSlice({
     updateAllReview: (state, action: PayloadAction<ReviewObject>) => ({
       ...state,
       review: action.payload
+    }),
+    setFilters: (state, action: PayloadAction<TableFiltersModel>) => ({
+      ...state,
+      filters: {
+        ...state.filters,
+        ...action.payload
+      }
+    }),
+    clearFilters: (state) => ({
+      problems: state.problems,
+      review: state.review,
     })
   },
 })
@@ -56,6 +68,8 @@ export const {
   updateAllReview,
   updateSingleProblem,
   resetSingleProblem,
+  setFilters,
+  clearFilters,
 } = tableSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
