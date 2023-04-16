@@ -4,9 +4,10 @@ import Box from '@mui/material/Box'
 export const Footer = () => {
   return (
     <Box sx={{
-      position: 'absolute',
+      position: 'relative',
       bottom: 10,
       width: '100%',
+      height: '1em',
       display: 'flex',
       justifyContent: 'space-around'
     }}>

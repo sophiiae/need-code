@@ -72,6 +72,7 @@ export const LoginForm = () => {
       sx={{
         'marginTop': '50px',
         '& .MuiTextField-root': { m: 1, width: '300px' },
+        minHeight: 'calc(100vh - 180px)',
       }}
     >
       {isSignup ?
