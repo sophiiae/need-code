@@ -2,6 +2,7 @@ export * from './content-wrapper'
 export * from './modal'
 export * from './loading-circle'
 export * from './error-text'
+export * from './footer'
 
 // table
 export * from './table/problem-table'
