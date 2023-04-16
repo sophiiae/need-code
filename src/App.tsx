@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import { MenuBar, ContentWrapper, LoginForm, Footer } from './components/index'
+import { MenuBar, ContentWrapper, LoginForm, Footer, NotFound } from './components/index'
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import './App.css'
@@ -21,6 +21,7 @@ function App() {
             state.isUserActive ? <ContentWrapper state={state} /> : <Navigate to='/login' replace />
           } />
           <Route path='/login' element={<LoginForm />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>
       <Footer />

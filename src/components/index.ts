@@ -3,6 +3,7 @@ export * from './modal'
 export * from './loading-circle'
 export * from './error-text'
 export * from './footer'
+export * from './not-found'
 
 // table
 export * from './table/problem-table'
