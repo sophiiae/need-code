@@ -1,7 +1,7 @@
 const { Builder, By } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('events').EventEmitter.defaultMaxListeners = 0
-const problems = require('./q1.json')
+const problems = require('./q5.json')
 
 // const problems = {
 //   "1": {
@@ -61,7 +61,7 @@ const scraper = async (id, url) => {
 
 fetchAll(problems).then(() => {
   fs.writeFile(
-    'content1.json',
+    'content5.json',
     JSON.stringify(map),
     'utf8',
     () => console.log('Done!')
