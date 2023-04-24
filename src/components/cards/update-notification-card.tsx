@@ -8,6 +8,7 @@ import LinearProgress from '@mui/material/LinearProgress'
 import packageJson from '../../../package.json'
 import { updateVersion } from '../../redux/features/userSlice'
 import { getData, writeSubData } from '../../firebase/useDatabase'
+import { getFormattedDate } from '../../store/tools'
 
 export const UpdateNotificationCard = () => {
   const [updating, setUpdating] = useState(false)
@@ -37,10 +38,21 @@ export const UpdateNotificationCard = () => {
 
     const updatedProblems: any = {}
     for (const key in problems) {
+      const dateString = problems[key].lastSubmit
+      const formattedString = dateString ? getFormattedDate(new Date(dateString)) : dateString
+
       if (key === '2086') {
-        updatedProblems[key] = { ...original[key] }
+        // fix outdated question
+        updatedProblems[key] = {
+          ...original[key],
+          lastSubmit: formattedString
+        }
       } else {
-        updatedProblems[key] = { ...problems[key], content: original[key].content }
+        updatedProblems[key] = {
+          ...problems[key],
+          content: original[key].content,
+          lastSubmit: formattedString
+        }
       }
     }
 

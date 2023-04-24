@@ -1,7 +1,7 @@
 import { ref, set, get, child, update, remove } from "firebase/database"
 import { db } from './config'
 import { ProblemModel, UserDataModel, UserDataTypes } from '../store/interfaces'
-import { getCurrentDateString } from '../store/tools'
+import { getFormattedDate } from '../store/tools'
 
 /**
  * Write / update whole user data
@@ -65,7 +65,7 @@ export const updateProblem = async (
   update(probRef, {
     ...data,
     solved: data.solved + 1,
-    lastSubmit: getCurrentDateString()
+    lastSubmit: getFormattedDate()
   }).catch(err => console.error(err))
   updateReview(uid, pid, data.solved)
 }

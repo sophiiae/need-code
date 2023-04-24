@@ -42,17 +42,15 @@ export function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => n
 }
 
 /**
- * Get string format of current date
+ * Get formatted date string of input Date in 'MM/DD/YYYY'. Default to current Date
  * @returns str
  */
-export const getCurrentDateString = () => {
-  const date = new Date()
-  return date.toLocaleDateString("en-US",
-    {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    })
+export const getFormattedDate = (date = new Date()) => {
+  let year = date.getFullYear();
+  let month = (1 + date.getMonth()).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+
+  return month + '/' + day + '/' + year;
 }
 
 // Sort by second column value for 2D arra

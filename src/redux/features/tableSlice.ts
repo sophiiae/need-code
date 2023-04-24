@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { ProblemsObject, ReviewObject, TableFiltersModel } from '../../store/interfaces'
-import { getCurrentDateString } from '../../store/tools'
+import { getFormattedDate } from '../../store/tools'
 
 interface TableState {
   problems: ProblemsObject,
@@ -23,7 +23,7 @@ export const tableSlice = createSlice({
       const id = action.payload
       const data = state.problems[id]
       data.solved += 1
-      data.lastSubmit = getCurrentDateString()
+      data.lastSubmit = getFormattedDate()
 
       // update review pool
       if (state.review[id]) {
