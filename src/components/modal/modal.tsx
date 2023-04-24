@@ -96,7 +96,7 @@ export const Modal = () => {
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Alert severity="warning">Make sure you have solved the problem before you click the button. Otherwise, it would affect the accuracy of review stack.</Alert>
-        <Content domString={data.content} />
+        {data.paidOnly ? null : <Content data={data} />}
       </DialogContent>
       <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <QuestionLinkButton url={data.url} />

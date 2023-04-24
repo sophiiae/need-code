@@ -6,8 +6,7 @@ import { auth } from '../firebase/config'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthContext } from '../context/authContext'
 import { Navigate } from "react-router-dom"
-import { writeData } from '../firebase/useDatabase'
-import { problems } from '../assets/problems'
+import { getData, writeData } from '../firebase/useDatabase'
 import { addUsername } from '../redux/features/userSlice'
 import { ErrorText } from './index'
 import { KeyCode } from '../store/enum'
@@ -20,6 +19,7 @@ export const LoginForm = () => {
   const [isSignup, setIsSignup] = useState(false)
   const [error, setError] = useState('')
   const { state, dispatch } = useContext(AuthContext)
+  const id = process.env.REACT_APP_TEST_USER
 
   if (state.isUserActive) {
     return <Navigate to='/' replace />
@@ -29,17 +29,18 @@ export const LoginForm = () => {
     setIsSignup(false)
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (isSignup && !username) {
       setError('Error: invalid username. Username must only contains letters, numbers, - or _')
       return
     }
-    if (isSignup) {
+    if (isSignup && id) {
+      const data = await getData(id)
       createUserWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
           dispatch({ type: 'SIGNUP', payload: userCredential.user })
           writeData(userCredential.user.uid, {
-            problems,
+            problems: data.problems,
             review: {},
             settings: { username, version: packageJson.version }
           })

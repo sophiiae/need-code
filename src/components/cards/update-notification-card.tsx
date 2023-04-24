@@ -3,21 +3,20 @@ import Box from '@mui/material/Box'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
 import { CardTemplate } from '../index'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { problems as original } from '../../assets/problems'
 import { updateAllProblems } from '../../redux/features/tableSlice'
 import LinearProgress from '@mui/material/LinearProgress'
 import packageJson from '../../../package.json'
 import { updateVersion } from '../../redux/features/userSlice'
-import { contents } from '../../assets/contents'
-import { writeSubData } from '../../firebase/useDatabase'
+import { getData, writeSubData } from '../../firebase/useDatabase'
 
 export const UpdateNotificationCard = () => {
   const [updating, setUpdating] = useState(false)
   const userSettings = useAppSelector(state => state.user)
   const { problems } = useAppSelector(state => state.table)
   const dispatch = useAppDispatch()
+  const id = process.env.REACT_APP_TEST_USER
 
-  if (!!userSettings.version) return <></>
+  if (!!userSettings.version || !id) return <></>
 
   const VersionUpdateDetails = () => (
     <Box sx={{ m: 2, mb: 0 }}>
@@ -29,17 +28,20 @@ export const UpdateNotificationCard = () => {
     </Box>
   )
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     setUpdating(true)
+    const data = await getData(id)
+    const original = data.problems
+
     const updatedProblems: any = {}
     for (const key in problems) {
-      const text = contents[key] ? contents[key] : ''
       if (key === '2086') {
-        updatedProblems[key] = { ...original[key], content: text }
+        updatedProblems[key] = { ...original[key] }
       } else {
-        updatedProblems[key] = { ...problems[key], content: text }
+        updatedProblems[key] = { ...problems[key], content: original[key].content }
       }
     }
+
     // Update the problems
     writeSubData(userSettings.id, 'problems', updatedProblems)
     dispatch(updateAllProblems(updatedProblems))
