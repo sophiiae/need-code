@@ -11,6 +11,7 @@ import { problems } from '../assets/problems'
 import { addUsername } from '../redux/features/userSlice'
 import { ErrorText } from './index'
 import { KeyCode } from '../store/enum'
+import packageJson from '../../package.json'
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -40,7 +41,7 @@ export const LoginForm = () => {
           writeData(userCredential.user.uid, {
             problems,
             review: {},
-            settings: { username }
+            settings: { username, version: packageJson.version }
           })
           dispatch(addUsername(username))
         })

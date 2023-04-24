@@ -20,7 +20,8 @@ const initialState: ModalState = {
     favor: 0,
     solved: 0,
     lastSubmit: "2000-01-16T00:00:00.000Z",
-    noteUrl: ""
+    noteUrl: "",
+    content: ""
   }
 }
 
@@ -44,4 +45,4 @@ export const { closeModal, openModal } = modalSlice.actions
 // Other code such as selectors can use the imported `RootState` type
 export const selectModal = (state: RootState) => state.modal
 
-export const modalReducer =  modalSlice.reducer
+export const modalReducer = modalSlice.reducer

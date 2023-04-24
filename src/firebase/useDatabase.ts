@@ -1,6 +1,6 @@
 import { ref, set, get, child, update, remove } from "firebase/database"
 import { db } from './config'
-import { ProblemModel, UserDataModel } from '../store/interfaces'
+import { ProblemModel, UserDataModel, UserDataTypes } from '../store/interfaces'
 import { getCurrentDateString } from '../store/tools'
 
 /**
@@ -8,6 +8,14 @@ import { getCurrentDateString } from '../store/tools'
  */
 export const writeData = (uid: string, data: UserDataModel) => {
   set(ref(db, 'users/' + uid), data)
+    .catch(err => console.error(err))
+}
+
+/**
+ * Write / update user sub data with corresponding path
+ */
+export const writeSubData = (uid: string, path: string, data: UserDataTypes) => {
+  set(ref(db, `users/${uid}/${path}`), data)
     .catch(err => console.error(err))
 }
 

@@ -37,6 +37,10 @@ export interface ProblemModel {
    * Url of user's note. Default: ''
    */
   noteUrl: string,
+  /**
+   * Content text of question
+   */
+  content: string,
 }
 
 export interface ProblemsObject {
@@ -52,8 +56,11 @@ export interface UserDataModel {
   settings: UserSettings
 }
 
+export type UserDataTypes = ProblemsObject | ReviewObject | UserSettings
+
 export interface UserSettings {
   username: string,
+  version: string
 }
 
 export interface UserProfileModel {
