@@ -1,9 +1,11 @@
 import { useState, KeyboardEvent } from 'react'
+import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import { getPidfromIput } from '../../store/tools'
 import { updateProblem } from '../../firebase/useDatabase'
 import { KeyCode } from '../../store/enum'
+import { CardActions, CardContent } from '@mui/material'
 import { ErrorText, CardTemplate } from '../index'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { resetSingleProblem, updateSingleProblem } from '../../redux/features/tableSlice'
@@ -66,9 +68,10 @@ export const ProblemSettingCard = ({ user }: ProblemSettingCardProp) => {
     return
   }
 
-  const Content = () => {
-    return (
-      <>
+  return (
+    <CardTemplate
+      title='Problem Review Setting'>
+      <CardContent>
         <CustomTextField
           label="Problem ID"
           id='problem-setting-input'
@@ -78,21 +81,27 @@ export const ProblemSettingCard = ({ user }: ProblemSettingCardProp) => {
             setError('')
             setValue(e.target.value)
           }}
+          autoComplete='off'
           value={value}
           onKeyDown={handleKeyDown} />
         <ErrorText message={error} />
-      </>
-    )
-  }
-
-  return (
-    <CardTemplate
-      title='Problem Review Setting'
-      content={<Content />}
-      rightButtonLabel='Add'
-      rightButtonClickHandle={handleAdd}
-      leftButtonLabel='Reset'
-      leftButtonClickHandle={handleReset}
-    />
+      </CardContent>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Button
+          variant="outlined"
+          color='success'
+          sx={{ m: 1 }}
+          onClick={handleReset}>
+          Reset
+        </Button>
+        <Button
+          variant="contained"
+          color='primary'
+          sx={{ m: 1 }}
+          onClick={handleAdd}>
+          Add
+        </Button>
+      </CardActions>
+    </CardTemplate>
   )
 }

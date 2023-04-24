@@ -61,7 +61,6 @@ export const UtilityBar = () => {
       return
     }
     dispatch(setFilters({ [TableFilterType.STATUS]: value }))
-
   }
 
   return (

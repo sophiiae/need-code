@@ -86,6 +86,7 @@ export const ProblemTable = () => {
 
   useEffect(() => {
     filterList()
+    setPage(1)
   }, [filters, filterList])
 
   if (!problems) return <></>

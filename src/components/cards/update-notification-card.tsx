@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive'
 import { CardTemplate } from '../index'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
@@ -9,6 +8,9 @@ import packageJson from '../../../package.json'
 import { updateVersion } from '../../redux/features/userSlice'
 import { getData, writeSubData } from '../../firebase/useDatabase'
 import { getFormattedDate } from '../../store/tools'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import Button from '@mui/material/Button'
 
 export const UpdateNotificationCard = () => {
   const [updating, setUpdating] = useState(false)
@@ -20,7 +22,7 @@ export const UpdateNotificationCard = () => {
   if (!!userSettings.version || !id) return <></>
 
   const VersionUpdateDetails = () => (
-    <Box sx={{ m: 2, mb: 0 }}>
+    <CardContent sx={{ m: 2, mb: 0 }}>
       <ul>
         <li>Fix outdated question link</li>
         <li>Fix <code>LastSubmit</code> order issue</li>
@@ -28,7 +30,7 @@ export const UpdateNotificationCard = () => {
         <li>Enable <code>Enter</code> keyboard shortcut for submit Login/Signup Form and Problem Review Setting</li>
       </ul>
       {updating && <LinearProgress sx={{ mt: 3 }} />}
-    </Box>
+    </CardContent>
   )
 
   const handleUpdate = async () => {
@@ -71,11 +73,23 @@ export const UpdateNotificationCard = () => {
 
   return (
     <CardTemplate
-      titleIcon={<NotificationsActiveIcon fontSize='small' sx={{ color: '#ffb703', verticalAlign: 'top', mr: 0.5 }} />}
+      titleIcon={
+        <NotificationsActiveIcon
+          fontSize='small'
+          sx={{ color: '#ffb703', verticalAlign: 'top', mr: 0.5 }}
+        />}
       title='Update to v0.2.0'
-      content={<VersionUpdateDetails />}
-      rightButtonLabel={updating ? '' : 'Update'}
-      rightButtonClickHandle={handleUpdate}
-    />
+    >
+      <VersionUpdateDetails />
+      <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          variant="contained"
+          color='primary'
+          sx={{ m: 1 }}
+          onClick={handleUpdate}>
+          Add
+        </Button>
+      </CardActions>
+    </CardTemplate>
   )
 }
