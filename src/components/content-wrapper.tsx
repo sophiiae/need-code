@@ -20,8 +20,10 @@ export const ContentWrapper = ({ state }: ContentWrapperProp) => {
       dispatch(updateAllProblems(data.problems))
       dispatch(updateAllReview(data.review))
       dispatch(addUserId(state.user.uid))
-      dispatch(addUsername(data.settings.username))
-      dispatch(updateVersion(data.settings.version))
+      if (data.settings) {
+        dispatch(addUsername(data.settings.username))
+        dispatch(updateVersion(data.settings.version))
+      }
     })
   }, [state.user.uid, dispatch])
 

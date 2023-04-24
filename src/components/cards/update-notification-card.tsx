@@ -22,7 +22,9 @@ export const UpdateNotificationCard = () => {
     <Box sx={{ m: 2, mb: 0 }}>
       <ul>
         <li>Fix outdated question link</li>
-        <li>Show non-Premium question content on Modal</li>
+        <li>Fix <code>LastSubmit</code> order issue</li>
+        <li>Upgrade Modal to include non-Premium question content</li>
+        <li>Enable <code>Enter</code> keyboard shortcut for submit Login/Signup Form and Problem Review Setting</li>
       </ul>
       {updating && <LinearProgress sx={{ mt: 3 }} />}
     </Box>
