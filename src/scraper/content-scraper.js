@@ -1,33 +1,7 @@
 const { Builder, By } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 require('events').EventEmitter.defaultMaxListeners = 0
-const problems = require('./q5.json')
-
-// const problems = {
-//   "1": {
-//     "id": 1,
-//     "title": "Two Sum",
-//     "url": "https://leetcode.com/problems/two-sum",
-//     "difficulty": 1,
-//     "paidOnly": 0,
-//     "favor": 0,
-//     "solved": 0,
-//     "lastSubmit": "2000-01-16T00:00:00.000Z",
-//     "noteUrl": ""
-//   },
-//   "2": {
-//     "id": 2,
-//     "title": "Add Two Numbers",
-//     "url": "https://leetcode.com/problems/add-two-numbers",
-//     "difficulty": 2,
-//     "paidOnly": 0,
-//     "favor": 0,
-//     "solved": 0,
-//     "lastSubmit": "2000-01-16T00:00:00.000Z",
-//     "noteUrl": ""
-//   },
-// }
-
+const problems = require('./problems.json')
 const fs = require('fs')
 
 const map = {}
@@ -50,8 +24,6 @@ const scraper = async (id, url) => {
   await browser.get(url)
 
   // Get question content
-  // const data = await browser.wait(browser.findElement(By.className("_1l1MA")), 4000)
-
   const data = await browser.wait(browser.findElement(By.className("_1l1MA")), 4000)
 
   const content = await data.getAttribute('innerHTML')
@@ -61,7 +33,7 @@ const scraper = async (id, url) => {
 
 fetchAll(problems).then(() => {
   fs.writeFile(
-    'content5.json',
+    'content.json',
     JSON.stringify(map),
     'utf8',
     () => console.log('Done!')
