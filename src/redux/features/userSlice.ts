@@ -5,11 +5,13 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 interface UserState {
   id: string,
   username: string,
+  version: string,
 }
 
 const initialState: UserState = {
   id: '',
-  username: ''
+  username: '',
+  version: ''
 }
 
 export const userSlice = createSlice({
@@ -23,11 +25,19 @@ export const userSlice = createSlice({
     addUsername: (state, action: PayloadAction<string>) => ({
       ...state,
       username: action.payload
+    }),
+    updateVersion: (state, action: PayloadAction<string>) => ({
+      ...state,
+      version: action.payload
     })
   },
 })
 
-export const { addUserId, addUsername } = userSlice.actions
+export const {
+  addUserId,
+  addUsername,
+  updateVersion
+} = userSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectUser = (state: RootState) => state.user

@@ -11,3 +11,40 @@
 .problemRow:nth-child(even) {
   background-color: #f8f8f8;
 }
+
+.question-content>pre {
+  padding: 1rem;
+  background-color: #000a2008;
+  color: #262626bf;
+  border-color: #0000000d;
+  line-height: 1.25rem;
+  border-radius: 0.5rem;
+  font-family: 'Menlo', sans-serif;
+  font-size: .875rem;
+  margin-bottom: 1rem;
+  white-space: pre-wrap;
+}
+
+code {
+  background-color: #000a2008;
+  border-color: #0000000d;
+  border-radius: 5px;
+  border-width: 1px;
+  color: #262626bf;
+  font-family: Menlo, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  padding: 0.125rem;
+  white-space: pre-wrap;
+}
+
+.question-content>ul {
+  list-style-type: disc;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.question-content>p {
+  margin-bottom: 1rem;
+}

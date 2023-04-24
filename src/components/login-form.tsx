@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, KeyboardEvent } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
@@ -6,10 +6,11 @@ import { auth } from '../firebase/config'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { AuthContext } from '../context/authContext'
 import { Navigate } from "react-router-dom"
-import { writeData } from '../firebase/useDatabase'
-import { problems } from '../assets/problems'
+import { getData, writeData } from '../firebase/useDatabase'
 import { addUsername } from '../redux/features/userSlice'
 import { ErrorText } from './index'
+import { KeyCode } from '../store/enum'
+import packageJson from '../../package.json'
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -18,6 +19,7 @@ export const LoginForm = () => {
   const [isSignup, setIsSignup] = useState(false)
   const [error, setError] = useState('')
   const { state, dispatch } = useContext(AuthContext)
+  const id = process.env.REACT_APP_TEST_USER
 
   if (state.isUserActive) {
     return <Navigate to='/' replace />
@@ -27,19 +29,20 @@ export const LoginForm = () => {
     setIsSignup(false)
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (isSignup && !username) {
       setError('Error: invalid username. Username must only contains letters, numbers, - or _')
       return
     }
-    if (isSignup) {
+    if (isSignup && id) {
+      const data = await getData(id)
       createUserWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
           dispatch({ type: 'SIGNUP', payload: userCredential.user })
           writeData(userCredential.user.uid, {
-            problems,
+            problems: data.problems,
             review: {},
-            settings: { username }
+            settings: { username, version: packageJson.version }
           })
           dispatch(addUsername(username))
         })
@@ -66,6 +69,12 @@ export const LoginForm = () => {
       })
   }
 
+  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === KeyCode.ENTER) {
+      isSignup ? handleSignUp() : handleLogin()
+    }
+  }
+
   return (
     <Box
       component='form'
@@ -84,6 +93,7 @@ export const LoginForm = () => {
             variant='outlined'
             type='text'
             onChange={e => setUsername(e.target.value)}
+            onKeyDown={handleSubmit}
           />
         </div> : null
       }
@@ -95,6 +105,7 @@ export const LoginForm = () => {
           variant='outlined'
           type='email'
           onChange={e => setEmail(e.target.value)}
+          onKeyDown={handleSubmit}
         />
       </div>
       <div>
@@ -105,6 +116,7 @@ export const LoginForm = () => {
           variant='outlined'
           type='password'
           onChange={e => setPassword(e.target.value)}
+          onKeyDown={handleSubmit}
         />
       </div>
       <ErrorText message={error} />

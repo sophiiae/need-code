@@ -1,9 +1,12 @@
 export * from './content-wrapper'
-export * from './modal'
 export * from './loading-circle'
 export * from './error-text'
 export * from './footer'
 export * from './not-found'
+
+// modal
+export * from './modal/modal'
+export * from './modal/content'
 
 // table
 export * from './table/problem-table'
@@ -18,5 +21,7 @@ export * from './menu/profile-button'
 
 // cards
 export * from './cards/problem-setting-card'
+export * from './cards/card-template'
+export * from './cards/update-notification-card'
 
 export * from './login-form'

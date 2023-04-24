@@ -1,14 +1,10 @@
 import { useState, KeyboardEvent } from 'react'
-import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import { getPidfromIput } from '../../store/tools'
 import { updateProblem } from '../../firebase/useDatabase'
 import { KeyCode } from '../../store/enum'
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import { CardActions, CardContent } from '@mui/material'
-import { ErrorText } from '../index'
+import { ErrorText, CardTemplate } from '../index'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { resetSingleProblem, updateSingleProblem } from '../../redux/features/tableSlice'
 
@@ -70,12 +66,9 @@ export const ProblemSettingCard = ({ user }: ProblemSettingCardProp) => {
     return
   }
 
-  return (
-    <Card sx={{ ml: 2, minWidth: 340, minHeight: 200 }}>
-      <Typography sx={{ mt: 2, ml: 2, fontWeight: 600 }}>
-        Problem Review Setting
-      </Typography>
-      <CardContent>
+  const Content = () => {
+    return (
+      <>
         <CustomTextField
           label="Problem ID"
           id='problem-setting-input'
@@ -88,23 +81,18 @@ export const ProblemSettingCard = ({ user }: ProblemSettingCardProp) => {
           value={value}
           onKeyDown={handleKeyDown} />
         <ErrorText message={error} />
-      </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button
-          variant="outlined"
-          color='success'
-          sx={{ m: 1 }}
-          onClick={handleReset}>
-          Reset
-        </Button>
-        <Button
-          variant="contained"
-          color='primary'
-          sx={{ m: 1 }}
-          onClick={handleAdd}>
-          Add
-        </Button>
-      </CardActions>
-    </Card>
+      </>
+    )
+  }
+
+  return (
+    <CardTemplate
+      title='Problem Review Setting'
+      content={<Content />}
+      rightButtonLabel='Add'
+      rightButtonClickHandle={handleAdd}
+      leftButtonLabel='Reset'
+      leftButtonClickHandle={handleReset}
+    />
   )
 }

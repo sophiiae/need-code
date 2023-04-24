@@ -6,7 +6,7 @@ import { UserProfileModel } from '../store/interfaces'
 const initialState: UserProfileModel = {
   user: null,
   isUserActive: false,
-  settings: { username: '' }
+  settings: { username: '', version: '' }
 }
 
 export const AuthContext = createContext<{ state: UserProfileModel, dispatch: Dispatch<any> }>({

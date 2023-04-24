@@ -83,8 +83,7 @@ export const ProfileMenu = () => {
               </Typography>
             </MenuItem> : null
         }
-        <ProfileButton label='Profile' handleClick={handleClick} />
-        <ProfileButton label='Account' handleClick={handleClick} />
+        {!user.username && <ProfileButton label='Account' handleClick={handleClick} />}
         <ProfileButton label='Logout' linkToHome={true} handleClick={handleLogout} />
       </Menu>
     </Box>

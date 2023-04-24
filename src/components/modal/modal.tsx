@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -6,15 +7,16 @@ import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import Typography from '@mui/material/Typography'
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { closeModal } from '../redux/features/modalSlice'
 import Alert from '@mui/material/Alert'
 import Link from '@mui/material/Link'
 import PanToolAltIcon from '@mui/icons-material/PanToolAlt'
-import { updateProblem } from '../firebase/useDatabase'
-import { useContext } from 'react'
-import { AuthContext } from '../context/authContext'
-import { updateSingleProblem } from '../redux/features/tableSlice'
+
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { closeModal } from '../../redux/features/modalSlice'
+import { updateProblem } from '../../firebase/useDatabase'
+import { AuthContext } from '../../context/authContext'
+import { updateSingleProblem } from '../../redux/features/tableSlice'
+import { Content } from '../index'
 
 export interface DialogTitleProps {
   label: string
@@ -46,6 +48,25 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
   )
 }
 
+const QuestionLinkButton = ({ url }: any) => {
+  return (
+    <Typography >
+      <Link
+        href={url}
+        color='inherit'
+        underline='none'
+        target='_blank'
+        rel='noopener'
+      >
+        <Button variant="text" color="secondary">
+          Question
+          <PanToolAltIcon />
+        </Button>
+      </Link>
+    </Typography>
+  )
+}
+
 export const Modal = () => {
   const dispatch = useAppDispatch()
   const { open, data } = useAppSelector(state => state.modal)
@@ -68,28 +89,17 @@ export const Modal = () => {
       onClose={handleClose}
       aria-labelledby="customized-dialog-title"
       open={open}
+      maxWidth={!data.content ? 'sm' : 'md'}
     >
       <BootstrapDialogTitle label="customized-dialog-title" onClose={handleClose}>
         {data.id}. {data.title}
       </BootstrapDialogTitle>
       <DialogContent dividers>
         <Alert severity="warning">Make sure you have solved the problem before you click the button. Otherwise, it would affect the accuracy of review stack.</Alert>
-        <Typography sx={{ p: 2, paddingBottom: 0 }} >
-          <Link
-            href={data.url}
-            color='inherit'
-            underline='none'
-            target='_blank'
-            rel='noopener'
-          >
-            <Button variant="text" color="secondary">
-              Question
-              <PanToolAltIcon />
-            </Button>
-          </Link>
-        </Typography>
+        {data.paidOnly ? null : <Content data={data} />}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <QuestionLinkButton url={data.url} />
         <Button autoFocus variant='contained' onClick={handleSolved}>
           Solved!
         </Button>
