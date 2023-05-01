@@ -3,7 +3,7 @@
 A web app with React & Firebase that helps people to conquer and review Algorithm problems for coding interview. 
 
 # How to contribute
-! Contact the repo owner for Firebase permission.
+Contact the repo owner for Firebase permission.
 
 ## Basic Installation
 Clone the repo.
