@@ -69,7 +69,7 @@ export const LoginForm = () => {
       })
   }
 
-  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.code === KeyCode.ENTER) {
       isSignup ? handleSignUp() : handleLogin()
     }
@@ -85,40 +85,40 @@ export const LoginForm = () => {
       }}
     >
       {isSignup ?
-        <div>
-          <TextField
-            required
-            id='username'
-            label='Username'
-            variant='outlined'
-            type='text'
-            onChange={e => setUsername(e.target.value)}
-            onKeyDown={handleSubmit}
-          />
-        </div> : null
+        <TextField
+          required
+          id='username'
+          label='Username'
+          variant='outlined'
+          type='text'
+          fullWidth
+          sx={{ display: 'block' }}
+          onChange={e => setUsername(e.target.value)}
+          onKeyDown={handleKeyDown}
+        /> : null
       }
-      <div>
-        <TextField
-          required
-          id='email'
-          label='Email'
-          variant='outlined'
-          type='email'
-          onChange={e => setEmail(e.target.value)}
-          onKeyDown={handleSubmit}
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          id='password'
-          label='Password'
-          variant='outlined'
-          type='password'
-          onChange={e => setPassword(e.target.value)}
-          onKeyDown={handleSubmit}
-        />
-      </div>
+      <TextField
+        required
+        id='email'
+        label='Email'
+        variant='outlined'
+        type='email'
+        fullWidth
+        sx={{ display: 'block' }}
+        onChange={e => setEmail(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      <TextField
+        required
+        id='password'
+        label='Password'
+        variant='outlined'
+        type='password'
+        fullWidth
+        sx={{ display: 'block' }}
+        onChange={e => setPassword(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
       <ErrorText message={error} />
       <div
         style={{
