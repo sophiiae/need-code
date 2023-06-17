@@ -1,4 +1,6 @@
-export const sendRequest = async(prompt: string, negPrompt: string) => {
+import { Dispatch, SetStateAction } from 'react'
+
+export const sendRequest = async(prompt: string, negPrompt: string, setErr: Dispatch<SetStateAction<string>>) => {
   const url = process.env.REACT_APP_MODEL_ENDPOINT
   const model_api_url = new URL(url ? url : '')
   const token = process.env.REACT_APP_MODEL_TOKEN
@@ -32,6 +34,7 @@ export const sendRequest = async(prompt: string, negPrompt: string) => {
   )
 
   if (!response.ok) {
+    setErr('Fail to generate image, check the console error')
     throw new Error('Failed to generate image')
   }
 
